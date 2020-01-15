@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+        <h1>写真詳細</h1>
+        <%= attachment_image_tag @photo, :image %>
+        <table>
+            <tr>
+                <td><label>タイトル</label></td>
+                <td>
+                    <%= @photo.title %>
+                </td>
+            </tr>
+            <tr>
+                <td><label>説明</label></td>
+                <td>
+                    <%= @photo.caption %>
+                </td>
+            </tr>
+            <tr>
+                <td><label>ジャンル</label></td>
+                <td>
+                    <%#= @photo.category.name %>
+                </td>
+            </tr>
+            <tr>
+                <td><label>撮影場所</label></td>
+                <td>
+                    緯度：
+                    <%= @photo.latitude %>
+                    経度：
+                    <%= @photo.longitude %>
+                </td>
+            </tr>
+            <tr>
+                <td><label>撮影日時</label></td>
+                <td>
+                    <%= @photo.taken_at %>
+                </td>
+            </tr>
+            <tr>
+                <td><label>シャッタースピード</label></td>
+                <td>
+                    <%= @photo.speed %>
+                </td>
+            </tr>
+            <tr>
+                <td><label>F値</label></td>
+                <td>
+                    <%= @photo.f_number %>
+                </td>
+            </tr>
+            <tr>
+                <td><label>ホワイトバランス</label></td>
+                <td>
+                    <%= @photo.white_balance %>
+                </td>
+            </tr>
+        </table>
+        <%= link_to '編集する', edit_photo_path(@photo.id) %>
+    </div>
+</div>
