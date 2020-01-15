@@ -1,15 +1,104 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>PortfolioWebcamp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+</head>
 
-  <body>
+<body>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand">Navbar</a>
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>
+
+    
+<!--     <nav class="navbar nabvar-dark"> -->
+        <!-- //navbarを加えると、枠が丸くなる -->
+<!--         <div class="container-fluid">
+            <header>
+                <div class="navbar">
+                    <%# if  user_signed_in? %> -->
+                    <!-- 右寄せになる部分 ================ -->
+ <!--                    <ul class="navbar-nav ml-auto"> -->
+                        <!-- リンクのみ -->
+<!--                         <%#=  link_to "INSTAGRAM(仮)", "/", id: "logo", class: "navbar-brand" %>
+                        <li class="nav-item">
+                            <%#= link_to user_path(current_user), class: "fas fa-user mr-4 text-dark" do %>
+                            <%= current_user.display_name %>さん
+                            <%# end %>
+                        </li>
+                        <li class="nav-item">
+                            <%#= link_to "  新規投稿", new_photo_path,  class:'fas fa-cart-arrow-down mr-4 text-dark' %>
+                        </li>
+                        <li class="nav-item">
+                            <%#= link_to "   Logout", destroy_user_session_path, method: :delete, class:"fas fa-sign-out-alt text-dark" %>
+                        </li>
+                    </ul> -->
+                    <!-- ログインしていない時 -->
+                    <%# else %>
+<!--                     <ul class="nav navbar-expand navbar-right"> -->
+                        <!-- リンクのみ -->
+<!--                         <li>
+                            <%#= link_to "    Guest", new_user_registration_path, class:"fas fa-user mr-4 text-dark" %>
+                        </li>
+                        <li>
+                            <%#= link_to "   Sign-up", new_user_registration_path, class:'fas fa-user-plus mr-4 text-dark' %>
+                        </li>
+                        <li>
+                            <%#= link_to "   Login", new_user_session_path, class:'fas fa-sign-in-alt text-dark' %>
+                        </li>
+                    </ul>
+                    <%# end %>
+                </div>
+                <div class="navbar">
+                    <div class="navbar-brand ">
+                        <%#= link_to products_path do %>
+                        <%#= image_tag "nagano_cake.jpg" %>
+                        <%# end%>
+                    </div>
+                    <dl class="searchbox">
+                        <%#= search_form_for @search, url: products_path do |f| %>
+                        <div class="navbar-form navbar-left">
+                            <div class="input-group"> -->
+                                <!--検索対象のカラムを:hoge_contで示す。itemnameだったらitemname_cont-->
+                                <%#= f.search_field :product_name_cont, class: "form-control col-10 mb-4", placeholder: '検索ワードを入力' %>
+<!--                                 <span class="input-group-btn">
+                                    <%#= f.submit "検索", class: 'btn btn-default' %>
+                                </span>
+                            </div>
+                        </div>
+                        <%# end %>
+                        <div class="dropdown">
+                            <div class="menu">
+                                <div class="menu-title">カテゴリー</div>
+                                <div class="sub-menu">
+                                    <%# @categories.each do |category| %>
+                                    <%# if category.status =="有効" %>
+                                    <ul>
+                                        <li>
+                                            <%#= link_to category.name, products_search_path(category.id) %>
+                                        </li>
+                                    </ul>
+                                    <%# else %>
+                                    <%# end %>
+                                    <%# end %>
+                                </div>
+                            </div>
+                    </dl>
+                </div>
+            </header>
+        </div>
+    </nav> -->
+    <div class="container-fluid">
     <%= yield %>
-  </body>
+</div>
+</body>
+
 </html>
