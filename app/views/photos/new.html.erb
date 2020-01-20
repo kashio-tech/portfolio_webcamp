@@ -13,27 +13,55 @@
         <% end %>
         <%= form_for(@photo) do |f| %>
         <h2>新規登録画面</h2>
-        <%= f.attachment_field :image %>
-        <h4>タイトル</h4>
-        <%= f.text_field :title %>
-        <h4>説明</h4>
-        <%= f.text_area :caption %>
-        <h4>ジャンル</h4>
-        <%= f.collection_select :category_id, Category.all, :id, :name, :prompt => "選択してください" %>
-        <h4>撮影場所</h4>
-        <p>緯度<%= f.text_field :latitude %></p>
-        <p>経度<%= f.text_field :longitude %></p>
-        <h4>撮影日時</h4>
-        <%= f.text_field :taken_at %>
-        <h4>シャッタースピード</h4>
-        <%= f.text_field :speed %>
-        <h4>F値</h4>
-        <%= f.text_field :f_number %>
-        <h4>iso感度</h4>
-        <%= f.text_field :iso_speed %>
-        <h4>ホワイトバランス</h4>
-        <%= f.text_field :white_balance %>
+        <!-- 写真の登録 -->
+        <div>
+            <%= f.attachment_field :image %>
+            <h4>タイトル</h4>
+            <%= f.text_field :title %>
+            <h4>説明</h4>
+            <%= f.text_area :caption %>
+            <h4>ジャンル</h4>
+            <%= f.collection_select :category_id, Category.all, :id, :name, :prompt => "選択してください" %>
+            <h4>撮影場所</h4>
+            <p>緯度
+                <%= f.text_field :latitude %>
+            </p>
+            <p>経度
+                <%= f.text_field :longitude %>
+            </p>
+            <h4>撮影日時</h4>
+            <%= f.text_field :taken_at %>
+            <h4>シャッタースピード</h4>
+            <%= f.text_field :speed %>
+            <h4>F値</h4>
+            <%= f.text_field :f_number %>
+            <h4>iso感度</h4>
+            <%= f.text_field :iso_speed %>
+            <h4>ホワイトバランス</h4>
+            <%= f.text_field :white_balance %>
+        </div>
 
+        <!-- カメラの登録 -->
+        <div>
+            <!-- 新規のカメラ登録 -->
+            <label>
+                <%= radio_button_tag("selected_button", "another_camera") %>登録カメラから選択
+            </label><br>
+            <%#= f.label :user_id, class="sr-only" %>
+            <%= f.collection_select :user_id, current_user.cameras, :id, :camera_info,:prompt => "選択してください" %><br>
+            <label class="mt-4">
+                <%= radio_button_tag("selected_button", "new_user_camera") %>新しいカメラ
+            </label>
+            <%= f.fields_for(@new_camera) do |camera| %>
+            <h4>メーカー</h4>
+            <%= camera.text_field :maker %>
+            <h4>型式</h4>
+            <%= camera.text_field :model %>
+            <% end %>
+        </div>
+        <!-- レンズの登録 -->
+        <div>
+        </div>
         <br>
         <%= f.submit "投稿", class:'mt-2'%>
         <% end %>
