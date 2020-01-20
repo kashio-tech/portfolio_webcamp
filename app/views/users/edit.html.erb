@@ -1,0 +1,41 @@
+<div class="container-fluid mt-5">
+    <h4>登録情報編集</h4>
+    <%= form_for(@user) do |f| %>
+    <div class="profile_image">
+        <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, class: "rounded-circle profile-thumb", fallback: "no_image.jpg" %>
+    </div>
+    <%= f.attachment_field :profile_image, placeholder: "profile_image" %>
+    <table class="mt-2" border="1">
+        <tr>
+            <td class="text-center">氏名</td>
+            <td class="text-center">
+                <%= f.text_field :last_name %>
+                <%= f.text_field :first_name %>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">カナ</td>
+            <td>
+                <%= f.text_field :last_name_kana %>
+                <%= f.text_field :first_name_kana %>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">表示名</td>
+            <td>
+                <%= f.text_field :display_name %>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">メールアドレス</td>
+            <td>
+                <%= f.email_field :email %>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <%= f.submit "編集内容を保存",class: 'btn btn-sm btn-primary mt-2 mr-4' %>
+        <%= link_to "アカウント削除", user_path(@user.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-sm btn-danger mt-2' %>
+    </div>
+    <% end %>
+</div>
