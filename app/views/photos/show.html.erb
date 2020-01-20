@@ -1,60 +1,106 @@
 <div class="container">
     <div class="row">
-        <h1>写真詳細</h1>
-        <%= attachment_image_tag @photo, :image %>
-        <table>
-            <tr>
-                <td><label>タイトル</label></td>
-                <td>
-                    <%= @photo.title %>
-                </td>
-            </tr>
-            <tr>
-                <td><label>説明</label></td>
-                <td>
-                    <%= @photo.caption %>
-                </td>
-            </tr>
-            <tr>
-                <td><label>ジャンル</label></td>
-                <td>
-                    <%#= @photo.category.name %>
-                </td>
-            </tr>
-            <tr>
-                <td><label>撮影場所</label></td>
-                <td>
-                    緯度：
-                    <%= @photo.latitude %>
-                    経度：
-                    <%= @photo.longitude %>
-                </td>
-            </tr>
-            <tr>
-                <td><label>撮影日時</label></td>
-                <td>
-                    <%= @photo.taken_at %>
-                </td>
-            </tr>
-            <tr>
-                <td><label>シャッタースピード</label></td>
-                <td>
-                    <%= @photo.speed %>
-                </td>
-            </tr>
-            <tr>
-                <td><label>F値</label></td>
-                <td>
-                    <%= @photo.f_number %>
-                </td>
-            </tr>
-            <tr>
-                <td><label>ホワイトバランス</label></td>
-                <td>
-                    <%= @photo.white_balance %>
-                </td>
-            </tr>
-        </table>
-        <%= link_to '編集する', edit_photo_path(@photo.id) %>
+        <div class="col-xl-7">
+            <div>
+                <%= attachment_image_tag @photo, :image, class: 'w-100 mb-4' , fallback: "no_image.jpg", class: 'w-100 mb-4' %>
+                <i class="far fa-comments mr-4 text-danger">
+                    <%= @photo.post_comments.count %></i>
+                <% if @photo.favorited_by?(current_user) %>
+                <%= link_to @photo.favorites.count, photo_favorites_path(@photo.id), method: :delete, class: "fa fa-heart mr-4 text-danger" %>
+                <% else %>
+                <%= link_to @photo.favorites.count, photo_favorites_path(@photo.id), method: :post, class: "fa fa-heart-o mr-4 text-danger" %>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div>
+                <table>
+                    <tr>
+                        <td><label>タイトル</label></td>
+                        <td>
+                            <%= @photo.title %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>説明</label></td>
+                        <td>
+                            <%= @photo.caption %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>ジャンル</label></td>
+                        <td>
+                            <%#= @photo.category.name %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>撮影場所</label></td>
+                        <td>
+                            緯度：
+                            <%= @photo.latitude %>
+                            経度：
+                            <%= @photo.longitude %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>撮影日時</label></td>
+                        <td>
+                            <%= @photo.taken_at.strftime('%Y年%m月%d日') %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>シャッタースピード</label></td>
+                        <td>
+                            <%= @photo.speed %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>F値</label></td>
+                        <td>
+                            <%= @photo.f_number %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>ホワイトバランス</label></td>
+                        <td>
+                            <%= @photo.white_balance %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>メーカー</label></td>
+                        <td>
+                            <%= @photo.camera_maker %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-xl-1">
+            <% if @photo.user == current_user %>
+            <div>
+                <%= link_to '編集', edit_photo_path(@photo.id), class: 'btn btn-primary mr-4' %>
+            </div>
+            <div>
+                <%= link_to '削除', photo_path(@photo.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
+            </div>
+            <% end %>
+            <% @photo.post_comments.each do |post_comment| %>
+            <div class="photo-show-comment-body">
+                <%= attachment_image_tag post_comment.user, :profile_image, :fill, 50, 50, class: "rounded-circle profile-thumb", fallback: "no_image.jpg", :width => "50", :height => "50" %>
+                <a>
+                    <%= post_comment.user.display_name %></a>
+                <%= post_comment.created_at.strftime("%Y/%m/%d") %>
+                <%= post_comment.comment %>
+            </div>
+            <% end %>
+        </div>
+    </div>
+    <div class="row">
+        <%= form_for [@photo, @post_comment] do |f| %>
+        <div class="col-sm-12">
+            <%= f.text_area :comment %><br>
+            <%= f.submit "送信", class: "btn btn-primary" %>
+        </div>
+        <% end %>
     </div>
 </div>

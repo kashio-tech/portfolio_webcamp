@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_15_052338) do
+ActiveRecord::Schema.define(version: 2020_01_20_091313) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -41,31 +41,7 @@ ActiveRecord::Schema.define(version: 2020_01_15_052338) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "image_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "image_categories", force: :cascade do |t|
-    t.integer "image_id"
-    t.integer "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "images", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "category_id"
-    t.string "image_id"
-    t.string "title"
-    t.text "caption"
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "taken_at"
-    t.float "speed"
-    t.string "f_number"
-    t.string "iso_speed"
-    t.string "white_balance"
+    t.integer "photo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -98,6 +74,16 @@ ActiveRecord::Schema.define(version: 2020_01_15_052338) do
     t.string "white_balance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "camera_model"
+    t.string "camera_maker"
+  end
+
+  create_table "post_comments", force: :cascade do |t|
+    t.text "comment"
+    t.integer "user_id"
+    t.integer "photo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -113,6 +99,7 @@ ActiveRecord::Schema.define(version: 2020_01_15_052338) do
     t.string "display_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "profile_image_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
