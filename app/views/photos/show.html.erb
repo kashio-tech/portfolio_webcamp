@@ -13,8 +13,8 @@
             </div>
         </div>
         <div class="col-xl-4">
-            <div>
-                <table>
+            <div class="photo-detail">
+                <table  class="table">
                     <tr>
                         <td><label>タイトル</label></td>
                         <td>
@@ -45,7 +45,8 @@
                     <tr>
                         <td><label>撮影日時</label></td>
                         <td>
-                            <%= @photo.taken_at.strftime('%Y年%m月%d日') %>
+                            <%#= @photo.taken_at.strftime('%Y年%m月%d日') %>
+                            <%= @photo.taken_at %>
                         </td>
                     </tr>
                     <tr>
@@ -66,10 +67,31 @@
                             <%= @photo.white_balance %>
                         </td>
                     </tr>
+                </table>
+            </div>
+            <div class="camera-lense">
+                <table class="table">
                     <tr>
-                        <td><label>メーカー</label></td>
+                        <th></th>
+                        <th>メーカー</th>
+                        <th>型式</th>
+                    </tr>
+                    <tr>
+                        <td><label>カメラ</label></td>
                         <td>
                             <%= @photo.camera_maker %>
+                        </td>
+                        <td>
+                            <%= @photo.camera_model %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>レンズ</label></td>
+                        <td>
+                            <%= @photo.lense_maker %>
+                        </td>
+                        <td>
+                            <%= @photo.lense_model %>
                         </td>
                     </tr>
                 </table>
