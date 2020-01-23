@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <h2>レンズ編集</h2>
+    <!--     <%# if @camera.errors.any? %>
+<div id="error_explanation">
+    <ul>
+        <%# @camera.errors.full_messages.each do |message| %>
+        <li>
+            <%#= message %>
+        </li>
+        <%# end %>
+    </ul>
+</div>
+<%# end %> -->
+    <table class="table table-hover mt-3">
+        <tr>
+            <th>メーカー</th>
+            <th>型式</th>
+            <th></th>
+        </tr>
+        <tr>
+            <%= form_for(@lense) do |f| %>
+            <td>
+                <%= f.text_field :maker , class: "col-xs" %>
+            </td>
+            <td>
+                <%= f.text_field :model , class: "col-xs" %>
+            </td>
+            <td>
+                <div>
+                    <%= f.submit '保存', class: "col-xs btn btn-primary" %>
+                </div>
+            </td>
+            <% end %>
+        </tr>
+    </table>
+</div>
