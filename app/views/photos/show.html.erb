@@ -1,8 +1,8 @@
 <div class="container">
-    <div class="row">
-        <div class="col-xl-7">
-            <div>
-                <%= attachment_image_tag @photo, :image, class: 'w-100 mb-4' , fallback: "no_image.jpg", class: 'w-100 mb-4' %>
+    <div class="row border-bottom mt-4">
+        <div class="col-sm-8">
+            <div class="mb-4">
+                <%= attachment_image_tag @photo, :image, class: 'w-100 mb-4' , fallback: "no_image.jpg", class: 'w-100' %>
                 <i class="far fa-comments mr-4 text-danger">
                     <%= @photo.post_comments.count %></i>
                 <% if @photo.favorited_by?(current_user) %>
@@ -11,103 +11,132 @@
                 <%= link_to @photo.favorites.count, photo_favorites_path(@photo.id), method: :post, class: "fa fa-heart-o mr-4 text-danger" %>
                 <% end %>
             </div>
+            <div class="mb-4">
+                <h4>撮影者の情報</h4>
+                <%= attachment_image_tag @photo.user, :profile_image, :fill, 100, 100, class: "rounded-circle profile-thumb", fallback: "no_image.jpg", :width => "50", :height => "50" %>
+                <%= @photo.user.display_name %>
+                <i class="far fa-images ml-4">
+                    <%= "投稿写真数:　#{@photo.user.photos.count}枚" %></i>
+                <% if @photo.user == current_user %>
+                <% end %>
+            </div>
         </div>
-        <div class="col-xl-4">
+        <div class="col-sm-4">
             <div class="photo-detail">
-                <table  class="table">
-                    <tr>
-                        <td><label>タイトル</label></td>
-                        <td>
-                            <%= @photo.title %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>説明</label></td>
-                        <td>
-                            <%= @photo.caption %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>ジャンル</label></td>
-                        <td>
-                            <%#= @photo.category.name %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>撮影場所</label></td>
-                        <td>
-                            緯度：
-                            <%= @photo.latitude %>
-                            経度：
-                            <%= @photo.longitude %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>撮影日時</label></td>
-                        <td>
-                            <%#= @photo.taken_at.strftime('%Y年%m月%d日') %>
-                            <%= @photo.taken_at %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>シャッタースピード</label></td>
-                        <td>
-                            <%= @photo.speed %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>F値</label></td>
-                        <td>
-                            <%= @photo.f_number %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>ホワイトバランス</label></td>
-                        <td>
-                            <%= @photo.white_balance %>
-                        </td>
-                    </tr>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th class="border-top-0">
+                                <h4>写真情報</h4>
+                            </th>
+                            <th class="border-top-0">
+                                <%= link_to '編集', edit_photo_path(@photo.id), class: 'btn btn-primary' %>
+                                <%= link_to '削除', photo_path(@photo.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td><label>タイトル</label></td>
+                            <td>
+                                <%= @photo.title %>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><label>説明</label></td>
+                            <td>
+                                <%= @photo.caption %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>ジャンル</label></td>
+                            <td>
+                                <%#= @photo.category.name %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>撮影場所</label></td>
+                            <td><%= "緯度: #{@photo.latitude}" %><br>
+                                <%= "経度: #{@photo.longitude}" %></td>
+                        </tr>
+                        <tr>
+                            <td><label>撮影日時</label></td>
+                            <td>
+                                <%#= @photo.taken_at.strftime('%Y年%m月%d日') %>
+                                <%= @photo.taken_at %>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
-            <div class="camera-lense">
-                <table class="table">
-                    <tr>
-                        <th></th>
-                        <th>メーカー</th>
-                        <th>型式</th>
-                    </tr>
-                    <tr>
-                        <td><label>カメラ</label></td>
-                        <td>
-                            <%= @photo.camera_maker %>
-                        </td>
-                        <td>
-                            <%= @photo.camera_model %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>レンズ</label></td>
-                        <td>
-                            <%= @photo.lense_maker %>
-                        </td>
-                        <td>
-                            <%= @photo.lense_model %>
-                        </td>
-                    </tr>
+            <div class="camera-lense mt-4">
+                <h4>撮影機器</h4>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                        <th class="border-top-0"></th>
+                            <th class="border-top-0">メーカー</th>
+                            <th class="border-top-0">型式</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>カメラ</td>
+                            <td>
+                                <%= @photo.camera_maker %>
+                            </td>
+                            <td>
+                                <%= @photo.camera_model %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>レンズ</label></td>
+                            <td>
+                                <%= @photo.lense_maker %>
+                            </td>
+                            <td>
+                                <%= @photo.lense_model %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                        <th class="border-top-0">
+                            <h4>設定</h4>
+                        </th>
+                        <th class="border-top-0"></th>
+                        <tr>
+                    </thead>
+                        <tr>
+                            <td><label>シャッタースピード</label></td>
+                            <td>
+                                <%= @photo.speed %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>F値</label></td>
+                            <td>
+                                <%= @photo.f_number %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>ホワイトバランス</label></td>
+                            <td>
+                                <%= @photo.white_balance %>
+                            </td>
+                        </tr>
                 </table>
             </div>
         </div>
-        <div class="col-xl-1">
-            <% if @photo.user == current_user %>
-            <div>
-                <%= link_to '編集', edit_photo_path(@photo.id), class: 'btn btn-primary mr-4' %>
-            </div>
-            <div>
-                <%= link_to '削除', photo_path(@photo.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
-            </div>
-            <% end %>
+    </div>
+    <div class="row mt-4"></div>
+    <div class="row mt-4">
+        <div class="col-sm-12">
+            <h4>コメント</h4>
             <% @photo.post_comments.each do |post_comment| %>
-            <div class="photo-show-comment-body">
+            <div class="photo-show-comment-body mt-2">
                 <%= attachment_image_tag post_comment.user, :profile_image, :fill, 50, 50, class: "rounded-circle profile-thumb", fallback: "no_image.jpg", :width => "50", :height => "50" %>
                 <a>
                     <%= post_comment.user.display_name %></a>
@@ -116,13 +145,77 @@
             </div>
             <% end %>
         </div>
-    </div>
-    <div class="row">
         <%= form_for [@photo, @post_comment] do |f| %>
         <div class="col-sm-12">
-            <%= f.text_area :comment %><br>
+            <%= f.text_area :comment %>
             <%= f.submit "送信", class: "btn btn-primary" %>
         </div>
         <% end %>
     </div>
 </div>
+
+
+
+        <!-------------------------------- ここより下は地図表示 --------------------------------->
+        <!DOCTYPE html>
+        <html>
+
+        <head>
+            <meta charset="utf-8">
+            <title>Simple Map Sample</title>
+            <meta charset="utf-8">
+            <style>
+                /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
+    #map {
+        height: 400px;
+        width: 1000px;
+    }
+    </style>
+        </head>
+
+        <body>
+            <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
+            <div id="infowindw">sample1</div>
+            <script>
+                var map;
+    var marker;
+    // var infoWindow;
+    var center = {
+        lat: <%= @photo.latitude %>, // 緯度
+        lng: <%= @photo.longitude %> // 経度
+    };
+
+
+    function myFnc() {
+    document.getElementById('lat_data').value =  document.getElementById('lat').value;
+    document.getElementById('lng_data').value =  document.getElementById('lng').value;
+    }
+
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
+            center: center, // 地図の中心を指定
+            zoom: 16 // 地図のズームを指定
+        });
+
+            marker = new google.maps.Marker({ // マーカーの追加
+                position: center, // マーカーを立てる位置を指定
+                map: map, // マーカーを立てる地図を指定
+                title: "sample"
+            });
+
+        //     infoWindow = new google.maps.InfoWindow({ //吹き出しの追加
+        //         //content: '<div class = "map">SAMPLE</div>' //吹き出しに表示する内容
+        //         content: document.getElementById('infowindw')
+        //     });
+        //     marker.addListener('click', function() { //マーカーをクリックしたとき
+        //         infoWindow.open(map, marker); //吹き出しの表示
+        //     });
+    }
+    </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOlapdhQ2xu4MKQzcqUDSrLCxBBHtwpns&callback=initMap" async defer></script>
+        </body>
+
+        </html>
+    </div>
+    <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
