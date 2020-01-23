@@ -1,25 +1,39 @@
 <div class="container">
-    <!DOCTYPE html>
-<html>
+    <h2>新規登録画面</h2>
+    <div class="row">
+        <% if @photo.errors.any? %>
+        <div id="error_explanation">
+            <ul>
+                <% @photo.errors.full_messages.each do |message| %>
+                <li>
+                    <%= message %>
+                </li>
+                <% end %>
+            </ul>
+        </div>
+        <% end %>
+        <!-------------------------------- ここより下は地図表示 --------------------------------->
+        <!DOCTYPE html>
+        <html>
 
-<head>
-    <meta charset="utf-8">
-    <title>Simple Map Sample</title>
-    <meta charset="utf-8">
-    <style>
-    /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
+        <head>
+            <meta charset="utf-8">
+            <title>Simple Map Sample</title>
+            <meta charset="utf-8">
+            <style>
+                /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
     #map {
         height: 400px;
         width: 1000px;
     }
     </style>
-</head>
+        </head>
 
-<body>
-    <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
-    <div id="infowindw">sample1</div>
-    <script>
-    var map;
+        <body>
+            <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
+            <div id="infowindw">sample1</div>
+            <script>
+                var map;
     // var marker;
     // var infoWindow;
     // var center = {
@@ -28,11 +42,16 @@
     // };
 
 
+    function myFnc() {
+    document.getElementById('lat_data').value =  document.getElementById('lat').value;
+    document.getElementById('lng_data').value =  document.getElementById('lng').value;
+    }
+
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
             center: { lat: 35.65813908034716, lng: 139.69948625369216 }, // 地図の中心を指定
-            zoom: 8 // 地図のズームを指定
+            zoom: 16 // 地図のズームを指定
         });
 
         //     marker = new google.maps.Marker({ // マーカーの追加
@@ -59,6 +78,7 @@
             //☆表示している地図上の緯度経度
             document.getElementById('lat').value=e.latLng.lat();
             document.getElementById('lng').value=e.latLng.lng();
+            myFnc();
 
             var marker = new google.maps.Marker({
 
@@ -76,6 +96,8 @@
             //マーカーのイベント
             google.maps.event.addListener(marker, 'click', function() {
                 infoWindow.open(map, marker); //marker の位置に情報ウィンドウを表示
+                //myFnc();
+
             });
 
             //情報ウィンドウののイベント
@@ -85,99 +107,83 @@
         });
     }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOlapdhQ2xu4MKQzcqUDSrLCxBBHtwpns&callback=initMap" async defer></script>
-</body>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOlapdhQ2xu4MKQzcqUDSrLCxBBHtwpns&callback=initMap" async defer></script>
+        </body>
 
-</html>
-
-<p>マーカーのある位置の<br>
-緯度 <input type="text" id="lat" value=""><br>
-経度 <input type="text" id="lng" value=""><br>
-地図上をクリックするとマーカーを移動できます。</p>
-
-
-
-    <div class="row">
-        <% if @photo.errors.any? %>
-        <div id="error_explanation">
-            <ul>
-                <% @photo.errors.full_messages.each do |message| %>
-                <li>
-                    <%= message %>
-                </li>
-                <% end %>
-            </ul>
-        </div>
-        <% end %>
-        <%= form_for(@photo) do |f| %>
-        <h2>新規登録画面</h2>
-        <!-- 写真の登録 -->
-        <div>
+        </html>
+        <p>マーカーのある位置の<br>
+            緯度 <input type="text" id="lat" value="" onchange="myFnc();"><br>
+            経度 <input type="text" id="lng" value=""><br>
+            地図上をクリックするとマーカーを移動できます。</p>
+    </div>
+    <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
+    <div class="row mt-4">
+        <div class="col-sm-6">
+            <%= form_for(@photo) do |f| %>
+            <!-- 写真の登録 -->
+            <h5>画像選択</h5>
             <%= f.attachment_field :image %>
-            <h4>タイトル</h4>
+            <h5>タイトル</h5>
             <%= f.text_field :title %>
-            <h4>説明</h4>
+            <h5>説明</h5>
             <%= f.text_area :caption %>
-            <h4>ジャンル</h4>
+            <h5>ジャンル</h5>
             <%= f.collection_select :category_id, Category.all, :id, :name, :prompt => "選択してください" %>
-            <h4>撮影場所</h4>
+            <h5>撮影場所</h5>
             <p>緯度
-                <%= f.hidden_field :latitude, :value => id="lat" %>
+                <%= f.text_field :latitude, id: "lat_data" %>
             </p>
             <p>経度
-                <%= f.hidden_field :longitude, :value => id="lng" %>
+                <%= f.text_field :longitude, id: "lng_data" %>
             </p>
-            <h4>撮影日時</h4>
+            <h5>撮影日時</h5>
             <%= f.text_field :taken_at %>
-            <h4>シャッタースピード</h4>
+            <h5>シャッタースピード</h5>
             <%= f.text_field :speed %>
-            <h4>F値</h4>
+            <h5>F値</h5>
             <%= f.text_field :f_number %>
-            <h4>iso感度</h4>
+            <h5>iso感度</h5>
             <%= f.text_field :iso_speed %>
-            <h4>ホワイトバランス</h4>
+            <h5>ホワイトバランス</h5>
             <%= f.text_field :white_balance %>
         </div>
         <!-- 撮影場所の登録 -->
-
         <!-- カメラの登録 -->
-        <div>
-            <!-- 新規のカメラ登録 -->
+        <div class="col-sm-6">
+            <h5>撮影カメラ情報</h5>
             <label>
                 <%= radio_button_tag("selected_button_camera", "registered_camera") %>登録カメラから選択
             </label><br>
             <%#= f.label :user_id, class="sr-only" %>
             <%= f.collection_select :user_id, current_user.cameras, :id, :camera_info,:prompt => "選択してください" %><br>
-            <label class="mt-4">
+            <label>
                 <%= radio_button_tag("selected_button_camera", "new_camera") %>新しいカメラ
             </label>
             <%= f.fields_for(@new_camera) do |camera| %>
-            <h4>メーカー</h4>
+            <h5>メーカー</h5>
             <%= camera.text_field :maker %>
-            <h4>型式</h4>
+            <h5>型式</h5>
             <%= camera.text_field :model %>
             <% end %>
-        </div>
-        <!-- レンズの登録 -->
-        <div>
-            <!-- 新規のレンズ登録 -->
+            <!-- レンズの登録 -->
+            <h5 class="mt-4">撮影レンズ情報</h5>
             <label>
                 <%= radio_button_tag("selected_button_lense", "registered_lense") %>登録レンズから選択
             </label><br>
             <%#= f.label :user_id, class="sr-only" %>
             <%= f.collection_select :user_id, current_user.lenses, :id, :lense_info,:prompt => "選択してください" %><br>
-            <label class="mt-4">
+            <label>
                 <%= radio_button_tag("selected_button_lense", "new_lense") %>新しいレンズ
             </label>
             <%= f.fields_for(@new_lense) do |lense| %>
-            <h4>メーカー</h4>
+            <h5>メーカー</h5>
             <%= lense.text_field :maker %>
-            <h4>型式</h4>
+            <h5>型式</h5>
             <%= lense.text_field :model %>
             <% end %>
+            <br>
+            <%= f.submit "投稿", class: 'btn btn-primary mt-2'%>
         </div>
-        <br>
-        <%= f.submit "投稿", class:'mt-2'%>
         <% end %>
     </div>
 </div>
