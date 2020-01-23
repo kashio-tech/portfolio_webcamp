@@ -1,7 +1,6 @@
 class CamerasController < ApplicationController
 	def index
-		@user = current_user
-		@cameras = Camera.all
+		@cameras = current_user.cameras.all
 		@camera = Camera.new
 	end
 	def new
@@ -11,13 +10,13 @@ class CamerasController < ApplicationController
 		@camera = Camera.new(camera_params)
 		@camera.user_id = current_user.id
 		@camera.save
-		redirect_to	photos_path
+		redirect_to	cameras_path
 	end
 	def edit
 		@camera = Camera.find(params[:id])
 	end
 	def update
-		@camera = Camara.find(prams[:id])
+		@camera = Camera.find(params[:id])
 		@camera.update(camera_params)
 		redirect_to cameras_path
 	end

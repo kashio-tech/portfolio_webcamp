@@ -1,0 +1,47 @@
+<div class="container mt-5">
+    <h2>カメラ登録/一覧</h2>
+    <%# if @camera.errors.any? %>
+    <!--     <div id="error_explanation">
+        <ul>
+            <%# @camera.errors.full_messages.each do |message| %>
+            <li>
+                <%#= message %>
+            </li>
+            <%# end %>
+        </ul>
+    </div>
+    <%# end %> -->
+    <%= form_for(@camera, url: cameras_path) do |f| %>
+    <h4>メーカー
+        <%= f.text_field :maker %>
+        型式
+        <%= f.text_field :model %>
+        <%= f.submit '追加',class:"col-xs btn btn-primary"%>
+    </h4>
+    <% end %>
+    <table class="table table-hover mt-3">
+        <tbody>
+            <tr>
+                <th></th>
+                <th>メーカー</th>
+                <th>型式</th>
+                <th></th>
+            </tr>
+            <% @cameras.each do |camera| %>
+            <tr>
+                <td></td>
+                <td>
+                    <%=camera.maker %>
+                </td>
+                <td>
+                    <%=camera.model %>
+                </td>
+                <td>
+                    <%= link_to "編集する", edit_camera_path(camera.id), class: 'btn btn-sm btn-primary' %>
+                    <%= link_to '削除', camera_path(camera.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-sm btn-danger'%>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

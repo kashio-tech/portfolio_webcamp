@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resource :post_comments, only: [:create, :destroy]
     resource :favorites, only: [:create, :destroy]
   end
-  resources :cameras, only: [:index, :new, :create, :edit, :update, :delete]
+  resources :cameras, only: [:index, :create, :edit, :update, :destroy]
+  resources :lenses,  only: [:index, :create, :edit, :update, :destroy]
 
 end
