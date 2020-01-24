@@ -18,7 +18,7 @@ class PhotosController < ApplicationController
 			@photo.camera_model = params[:photo][:camera][:model]
 			Camera.create(user_id: current_user.id, maker: params[:photo][:camera][:maker], model: params[:photo][:camera][:model])
 		elsif  params[:selected_button_camera] == "registered_camera"
-			@camera = Camera.find(params[:photo][:user_id])
+			@camera = Camera.find(params[:photo][:camera_id])
 			@photo.camera_maker = @camera.maker
 			@photo.camera_model = @camera.model
       	end
@@ -27,7 +27,7 @@ class PhotosController < ApplicationController
 			@photo.lense_model = params[:photo][:lense][:model]
 			Lense.create(user_id: current_user.id, maker: params[:photo][:lense][:maker], model: params[:photo][:lense][:model])
 		elsif  params[:selected_button_lense] == "registered_lense"
-			@lense = Lense.find(params[:photo][:user_id])
+			@lense = Lense.find(params[:photo][:lense_id])
 			@photo.lense_maker = @lense.maker
 			@photo.lense_model = @lense.model
       	end
