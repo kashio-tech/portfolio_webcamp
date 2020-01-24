@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
 	def show
 		@user = User.find(params[:id])
-		@photos = current_user.photos.all
+		@photos = @user.photos.all.order(id: "desc")
+	end
+	def show_map
+		@user = User.find(params[:id])
+		@photos = @user.photos.all
 	end
 	def edit
 		@user = User.find(params[:id])

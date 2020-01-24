@@ -118,7 +118,7 @@
     </div>
     <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
     <div class="row mt-4">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <%= form_for(@photo) do |f| %>
             <!-- 写真の登録 -->
             <h5>画像選択</h5>
@@ -149,21 +149,17 @@
         </div>
         <!-- 撮影場所の登録 -->
         <!-- カメラの登録 -->
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <h5>撮影カメラ情報</h5>
-            <label>
+            <label class="mr-4">
                 <%= radio_button_tag("selected_button_camera", "registered_camera") %>登録カメラから選択
-            </label><br>
-            <%#= f.label :user_id, class="sr-only" %>
-            <%= f.collection_select :user_id, current_user.cameras, :id, :camera_info,:prompt => "選択してください" %><br>
+            </label>
             <label>
                 <%= radio_button_tag("selected_button_camera", "new_camera") %>新しいカメラ
-            </label>
+            </label><br>
+            <%= f.collection_select :camera_id, current_user.cameras, :id, :camera_info,:prompt => "選択してください" %><br>
             <%= f.fields_for(@new_camera) do |camera| %>
-            <h5>メーカー</h5>
-            <%= camera.text_field :maker %>
-            <h5>型式</h5>
-            <%= camera.text_field :model %>
+            <p class="mr-4">メーカー<%= camera.text_field :maker %>　型式<%= camera.text_field :model %></p>
             <% end %>
             <!-- レンズの登録 -->
             <h5 class="mt-4">撮影レンズ情報</h5>
@@ -171,7 +167,7 @@
                 <%= radio_button_tag("selected_button_lense", "registered_lense") %>登録レンズから選択
             </label><br>
             <%#= f.label :user_id, class="sr-only" %>
-            <%= f.collection_select :user_id, current_user.lenses, :id, :lense_info,:prompt => "選択してください" %><br>
+            <%= f.collection_select :lense_id, current_user.lenses, :id, :lense_info,:prompt => "選択してください" %><br>
             <label>
                 <%= radio_button_tag("selected_button_lense", "new_lense") %>新しいレンズ
             </label>
