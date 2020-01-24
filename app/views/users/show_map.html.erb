@@ -1,0 +1,106 @@
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-sm-8">
+                <div class="col-sm-6"><h4>マイページ</h4>
+                <%= link_to "画像一覧(写真)", user_path(@user), class: "btn btn-primary mr-4" %></div>
+            </div>
+            <div class="col-sm-4">
+                <% if @user.id == current_user.id %>
+                <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-primary mr-4" %>
+                <%= link_to "カメラ編集", cameras_path, class: "btn btn-primary" %>
+                <% end %>
+            </div>
+    </div>
+    <div class="row mt-4">
+        <% @photos.each do |photo| %>
+        <div class="col-sm-8  mx-auto text-center">
+            <!-- mx-autoでボックスをセンターに寄せる -->
+            <%= link_to photo_path(photo.id), class: 'text-dark' do %>
+            <!-- //w-100で画像サイズを100%にリサイズ設定 -->
+            <%= attachment_image_tag photo, :image, class: "w-100" %>
+            <p>
+                タイトル:
+                <%= photo.title %>
+                <i class="far fa-comments text-danger ml-4">
+                    <%= photo.post_comments.count %></i>
+                <% if photo.favorited_by?(current_user) %>
+                <%= link_to photo.favorites.count, photo_favorites_path(photo.id), method: :delete, class: "fa fa-heart text-danger" %>
+                <% else %>
+                <%= link_to photo.favorites.count, photo_favorites_path(photo.id), method: :post, class: "fa fa-heart-o text-danger" %>
+                <% end %>
+            </p>
+            <% end %>
+        </div>
+        <% end %>
+    </div>
+    <!-------------------------------- ここより下は地図表示 --------------------------------->
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Simple Map Sample</title>
+        <meta charset="utf-8">
+        <style>
+        /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
+        <div id="infowindw">sample1</div>
+        <script>
+        var map;
+        var marker;
+        var infoWindow;
+        var center = {
+            lat: 0.0000, // 緯度
+            lng: 0.0000 // 経度
+        };
+
+
+        function myFnc() {
+            document.getElementById('lat_data').value = document.getElementById('lat').value;
+            document.getElementById('lng_data').value = document.getElementById('lng').value;
+        }
+
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
+                center: center, // 地図の中心を指定
+                zoom: 2 // 地図のズームを指定
+            });
+            <% @photos.each do |photo| %>
+            marker = new google.maps.Marker({ // マーカーの追加
+                position: {lat: <%= photo.latitude %>, lng: <%= photo.longitude %>}, // マーカーを立てる位置を指定
+                map: map, // マーカーを立てる地図を指定
+                title: "<%= photo.title %>"
+            });
+
+            infoWindow = new google.maps.InfoWindow({ //吹き出しの追加
+                    content: 'caption' //吹き出しに表示する内容
+                    //content: document.getElementById('infowindw')
+                });
+            marker.addListener('click', function() { //マーカーをクリックしたとき
+                    infoWindow.open(map, marker); //吹き出しの表示
+                });
+            <% end %>
+        }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOlapdhQ2xu4MKQzcqUDSrLCxBBHtwpns&callback=initMap" async defer></script>
+    </body>
+
+    </html>
+    <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+</div>

@@ -13,8 +13,9 @@
             </div>
             <div class="mb-4">
                 <h4>撮影者の情報</h4>
+                <%= link_to user_path(@photo.user_id), class: 'mr-4 text-dark' do %>
                 <%= attachment_image_tag @photo.user, :profile_image, :fill, 100, 100, class: "rounded-circle profile-thumb", fallback: "no_image.jpg", :width => "50", :height => "50" %>
-                <%= @photo.user.display_name %>
+                <%= @photo.user.display_name %><% end %>
                 <i class="far fa-images ml-4">
                     <%= "投稿写真数:　#{@photo.user.photos.count}枚" %></i>
                 <% if @photo.user == current_user %>
@@ -56,8 +57,10 @@
                         </tr>
                         <tr>
                             <td><label>撮影場所</label></td>
-                            <td><%= "緯度: #{@photo.latitude}" %><br>
-                                <%= "経度: #{@photo.longitude}" %></td>
+                            <td>
+                                <%= "緯度: #{@photo.latitude}" %><br>
+                                <%= "経度: #{@photo.longitude}" %>
+                            </td>
                         </tr>
                         <tr>
                             <td><label>撮影日時</label></td>
@@ -74,7 +77,7 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                        <th class="border-top-0"></th>
+                            <th class="border-top-0"></th>
                             <th class="border-top-0">メーカー</th>
                             <th class="border-top-0">型式</th>
                         </tr>
@@ -103,36 +106,35 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                        <th class="border-top-0">
-                            <h4>設定</h4>
-                        </th>
-                        <th class="border-top-0"></th>
+                            <th class="border-top-0">
+                                <h4>設定</h4>
+                            </th>
+                            <th class="border-top-0"></th>
                         <tr>
                     </thead>
-                        <tr>
-                            <td><label>シャッタースピード</label></td>
-                            <td>
-                                <%= @photo.speed %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label>F値</label></td>
-                            <td>
-                                <%= @photo.f_number %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label>ホワイトバランス</label></td>
-                            <td>
-                                <%= @photo.white_balance %>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td><label>シャッタースピード</label></td>
+                        <td>
+                            <%= @photo.speed %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>F値</label></td>
+                        <td>
+                            <%= @photo.f_number %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>ホワイトバランス</label></td>
+                        <td>
+                            <%= @photo.white_balance %>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
     </div>
-    <div class="row mt-4"></div>
-    <div class="row mt-4">
+    <div class="row mt-4 mb-4">
         <div class="col-sm-12">
             <h4>コメント</h4>
             <% @photo.post_comments.each do |post_comment| %>
@@ -142,61 +144,63 @@
                     <%= post_comment.user.display_name %></a>
                 <%= post_comment.created_at.strftime("%Y/%m/%d") %>
                 <%= post_comment.comment %>
+                <% if current_user.present? %>
+                <% if post_comment.user_id == current_user.id %>
+                <%= link_to '削除', photo_post_comments_path(post_comment.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
+                <% end %>
+                <% end %>
             </div>
             <% end %>
         </div>
-        <%= form_for [@photo, @post_comment] do |f| %>
-        <div class="col-sm-12">
-            <%= f.text_area :comment %>
-            <%= f.submit "送信", class: "btn btn-primary" %>
-        </div>
-        <% end %>
     </div>
-</div>
+    <%= form_for [@photo, @post_comment] do |f| %>
+    <div class="row">
+            <%= f.text_area :comment, class: "col-sm-8 ml-3" %>
+            <div class="col-sm-2">
+            <%= f.submit "送信", class: "btn btn-primary" %></div>
+    </div>
+    <% end %>
+    <!-------------------------------- ここより下は地図表示 --------------------------------->
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Simple Map Sample</title>
+        <meta charset="utf-8">
+        <style>
+        /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
+        <div id="infowindw">sample1</div>
+        <script>
+        var map;
+        var marker;
+        // var infoWindow;
+        var center = {
+            lat: <%= @photo.latitude %>, // 緯度
+            lng: <%= @photo.longitude %> // 経度
+        };
 
 
-
-        <!-------------------------------- ここより下は地図表示 --------------------------------->
-        <!DOCTYPE html>
-        <html>
-
-        <head>
-            <meta charset="utf-8">
-            <title>Simple Map Sample</title>
-            <meta charset="utf-8">
-            <style>
-                /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
-    #map {
-        height: 400px;
-        width: 1000px;
-    }
-    </style>
-        </head>
-
-        <body>
-            <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
-            <div id="infowindw">sample1</div>
-            <script>
-                var map;
-    var marker;
-    // var infoWindow;
-    var center = {
-        lat: <%= @photo.latitude %>, // 緯度
-        lng: <%= @photo.longitude %> // 経度
-    };
+        function myFnc() {
+            document.getElementById('lat_data').value = document.getElementById('lat').value;
+            document.getElementById('lng_data').value = document.getElementById('lng').value;
+        }
 
 
-    function myFnc() {
-    document.getElementById('lat_data').value =  document.getElementById('lat').value;
-    document.getElementById('lng_data').value =  document.getElementById('lng').value;
-    }
-
-
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
-            center: center, // 地図の中心を指定
-            zoom: 16 // 地図のズームを指定
-        });
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
+                center: center, // 地図の中心を指定
+                zoom: 8 // 地図のズームを指定
+            });
 
             marker = new google.maps.Marker({ // マーカーの追加
                 position: center, // マーカーを立てる位置を指定
@@ -204,18 +208,18 @@
                 title: "sample"
             });
 
-        //     infoWindow = new google.maps.InfoWindow({ //吹き出しの追加
-        //         //content: '<div class = "map">SAMPLE</div>' //吹き出しに表示する内容
-        //         content: document.getElementById('infowindw')
-        //     });
-        //     marker.addListener('click', function() { //マーカーをクリックしたとき
-        //         infoWindow.open(map, marker); //吹き出しの表示
-        //     });
-    }
-    </script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOlapdhQ2xu4MKQzcqUDSrLCxBBHtwpns&callback=initMap" async defer></script>
-        </body>
+            //     infoWindow = new google.maps.InfoWindow({ //吹き出しの追加
+            //         //content: '<div class = "map">SAMPLE</div>' //吹き出しに表示する内容
+            //         content: document.getElementById('infowindw')
+            //     });
+            //     marker.addListener('click', function() { //マーカーをクリックしたとき
+            //         infoWindow.open(map, marker); //吹き出しの表示
+            //     });
+        }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOlapdhQ2xu4MKQzcqUDSrLCxBBHtwpns&callback=initMap" async defer></script>
+    </body>
 
-        </html>
-    </div>
+    </html>
     <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
+</div>
