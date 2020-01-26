@@ -13,4 +13,10 @@ class User < ApplicationRecord
          has_many	:favorites, dependent: :destroy
          has_many :cameras, dependent: :destroy
          has_many :lenses, dependent: :destroy
+
+         validates  :last_name, presence: true
+         validates  :first_name, presence: true
+         validates  :last_name_kana, presence: true
+         validates  :first_name_kana, presence: true
+         validates  :display_name, presence: true
 end

@@ -10,7 +10,7 @@ class PostCommentsController < ApplicationController
 	def destroy
 		photo = Photo.find(params[:photo_id])
         if photo.user_id == current_user.id
-            comment = current_user.post_comments.find_by(photo_id: photo.id)
+            comment = current_user.post_comments.find(params[:id])
             comment.destroy
             redirect_back(fallback_location: root_path)
         else

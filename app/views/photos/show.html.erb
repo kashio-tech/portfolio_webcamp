@@ -15,7 +15,8 @@
                 <h4>撮影者の情報</h4>
                 <%= link_to user_path(@photo.user_id), class: 'mr-4 text-dark' do %>
                 <%= attachment_image_tag @photo.user, :profile_image, :fill, 100, 100, class: "rounded-circle profile-thumb", fallback: "no_image.jpg", :width => "50", :height => "50" %>
-                <%= @photo.user.display_name %><% end %>
+                <%= @photo.user.display_name %>
+                <% end %>
                 <i class="far fa-images ml-4">
                     <%= "投稿写真数:　#{@photo.user.photos.count}枚" %></i>
                 <% if @photo.user == current_user %>
@@ -129,11 +130,17 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><label>iso感度</label></td>
+                        <td>
+                            <%= @photo.iso_speed %>
+                        </td>
+                    </tr>
+<!--                     <tr>
                         <td><label>ホワイトバランス</label></td>
                         <td>
                             <%= @photo.white_balance %>
                         </td>
-                    </tr>
+                    </tr> -->
                 </table>
             </div>
         </div>
@@ -150,7 +157,7 @@
                 <%= post_comment.comment %>
                 <% if current_user.present? %>
                 <% if post_comment.user_id == current_user.id %>
-                <%= link_to '削除', photo_post_comments_path(post_comment.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
+                <%= link_to '削除', photo_post_comment_path(@photo.id, post_comment.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
                 <% end %>
                 <% end %>
             </div>
@@ -159,9 +166,10 @@
     </div>
     <%= form_for [@photo, @post_comment] do |f| %>
     <div class="row">
-            <%= f.text_area :comment, class: "col-sm-8 ml-3" %>
-            <div class="col-sm-2">
-            <%= f.submit "送信", class: "btn btn-primary" %></div>
+        <%= f.text_area :comment, class: "col-sm-8 ml-3" %>
+        <div class="col-sm-2">
+            <%= f.submit "送信", class: "btn btn-primary" %>
+        </div>
     </div>
     <% end %>
     <!-------------------------------- ここより下は地図表示 --------------------------------->

@@ -85,13 +85,13 @@
              myFnc();
              deleteMarkers();
 
-                            //マーカーを削除する
-        function deleteMakers() {
-          if(marker != null){
-            marker.setMap(null);
-          }
-          marker = null;
-        }
+            //マーカーを削除する
+            function deleteMakers() {
+                if(marker != null){
+                marker.setMap(null);
+                    }
+                marker = null;
+            }
 
 
             marker = new google.maps.Marker({
@@ -116,6 +116,7 @@
 
             //マーカーのイベント
             google.maps.event.addListener(marker, 'click', function() {
+                //マーカーをクリックしたとき
                 infoWindow.open(map, marker); //marker の位置に情報ウィンドウを表示
                 //myFnc();
 
@@ -153,10 +154,10 @@
         </body>
 
         </html>
-        <p>マーカーのある位置の<br>
+<!--         <p>マーカーのある位置の<br>
             緯度 <input type="text" id="lat" value="" onchange="myFnc();"><br>
             経度 <input type="text" id="lng" value=""><br>
-            地図上をクリックするとマーカーを移動できます。</p>
+            地図上をクリックするとマーカーを移動できます。</p> -->
     </div>
     <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
     <div class="row mt-4">
@@ -186,8 +187,8 @@
             <%= f.text_field :f_number %>
             <h5>iso感度</h5>
             <%= f.text_field :iso_speed %>
-            <h5>ホワイトバランス</h5>
-            <%= f.text_field :white_balance %>
+            <!-- <h5>ホワイトバランス</h5> -->
+            <%#= f.text_field :white_balance %>
         </div>
         <!-- 撮影場所の登録 -->
         <!-- カメラの登録 -->
@@ -225,12 +226,13 @@
                 </p>
             </div>
             <% end %>
-            <!-- --------------------------------------------------------------aaa -->
             <%= f.submit "投稿", class: 'btn btn-primary mt-2'%>
         </div>
         <% end %>
     </div>
 </div>
+            <!------------------------入力項目のラジオボタン選択に対応した表示切替------------------------------------------->
+
 <script>
 function select_camera1() {
     radio = document.getElementsByName('selected_button_camera')
@@ -254,9 +256,10 @@ function select_lense1() {
         window.onload = select_lense1;
     }
 }
+// //////////////////画面表示時のラジオボタン選択状態///////////////////////////////////////////////////////////////////
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('Box1').style.display = "";
-    document.getElementById('Box2').style.display = "none";
+    document.getElementById('Box1').style.display = "";     //表示
+    document.getElementById('Box2').style.display = "none"; //非表示
     document.getElementById('Box3').style.display = "";
     document.getElementById('Box4').style.display = "none";
 

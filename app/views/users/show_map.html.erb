@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row mb-4">
             <div class="col-sm-2"><h4>マイページ</h4></div>
             <div class="col-sm-6"><%= link_to "画像一覧(写真)", user_path(@user), class: "btn btn-primary mr-4" %></div>
             <div class="col-sm-4">
@@ -10,28 +10,6 @@
                 <% end %>
                 <% end %>
             </div>
-    </div>
-    <div class="row mt-4">
-        <% @photos.each do |photo| %>
-        <div class="col-sm-8  mx-auto text-center">
-            <!-- mx-autoでボックスをセンターに寄せる -->
-            <%= link_to photo_path(photo.id), class: 'text-dark' do %>
-            <!-- //w-100で画像サイズを100%にリサイズ設定 -->
-            <%= attachment_image_tag photo, :image, class: "w-100" %>
-            <p>
-                タイトル:
-                <%= photo.title %>
-                <i class="far fa-comments text-danger ml-4">
-                    <%= photo.post_comments.count %></i>
-                <% if photo.favorited_by?(current_user) %>
-                <%= link_to photo.favorites.count, photo_favorites_path(photo.id), method: :delete, class: "fa fa-heart text-danger" %>
-                <% else %>
-                <%= link_to photo.favorites.count, photo_favorites_path(photo.id), method: :post, class: "fa fa-heart-o text-danger" %>
-                <% end %>
-            </p>
-            <% end %>
-        </div>
-        <% end %>
     </div>
     <!-------------------------------- ここより下は地図表示 --------------------------------->
     <!DOCTYPE html>
@@ -58,7 +36,7 @@
         // var marker;
         var marker = [];    //markerを配列で定義
         var infoWindow = [];    //infowindowを配列で定義
-        var image;
+
         var center = {
             lat: 0.0000, // 緯度
             lng: 0.0000 // 経度
@@ -90,7 +68,7 @@
             });
 
             infoWindow[j] = new google.maps.InfoWindow({ //吹き出しの追加
-                    content: "<%= photo.caption %>"  //吹き出しに表示する内容
+                    content: "タイトル： <%= photo.title %><br>"+ "説明： <%= photo.caption %><br>"  + "撮影日時： <%= photo.taken_at %>" //吹き出しに表示する内容
                     //content: document.getElementById('infowindw')
                 });
             aaa(j);
