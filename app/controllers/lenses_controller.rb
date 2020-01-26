@@ -1,4 +1,5 @@
 class LensesController < ApplicationController
+	before_action	:authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 	def index
 		@lenses = current_user.lenses.all
 		@lense = Lense.new

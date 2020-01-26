@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row">
-            <div class="col-sm-8">
-                <div class="col-sm-6"><h4>マイページ</h4>
-                <%= link_to "画像一覧(写真)", user_path(@user), class: "btn btn-primary mr-4" %></div>
-            </div>
+            <div class="col-sm-2"><h4>マイページ</h4></div>
+            <div class="col-sm-6"><%= link_to "画像一覧(写真)", user_path(@user), class: "btn btn-primary mr-4" %></div>
             <div class="col-sm-4">
+                <% if  user_signed_in? %>
                 <% if @user.id == current_user.id %>
                 <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-primary mr-4" %>
                 <%= link_to "カメラ編集", cameras_path, class: "btn btn-primary" %>
+                <% end %>
                 <% end %>
             </div>
     </div>
@@ -55,8 +55,10 @@
         <div id="infowindw">sample1</div>
         <script>
         var map;
-        var marker;
-        var infoWindow;
+        // var marker;
+        var marker = [];    //markerを配列で定義
+        var infoWindow = [];    //infowindowを配列で定義
+        var image;
         var center = {
             lat: 0.0000, // 緯度
             lng: 0.0000 // 経度
@@ -72,23 +74,33 @@
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
                 center: center, // 地図の中心を指定
-                zoom: 2 // 地図のズームを指定
+                zoom: 2, // 地図のズームを指定
+                disableDoubleClickZoom: true
             });
+            <% i = 0 %>
             <% @photos.each do |photo| %>
-            marker = new google.maps.Marker({ // マーカーの追加
+            // <%= aaa = @photos.length %>
+            // console.log(<%= aaa %>);
+            j = <%= i %>
+            marker[j] = new google.maps.Marker({ // マーカーの追加
                 position: {lat: <%= photo.latitude %>, lng: <%= photo.longitude %>}, // マーカーを立てる位置を指定
                 map: map, // マーカーを立てる地図を指定
                 title: "<%= photo.title %>"
+
             });
 
-            infoWindow = new google.maps.InfoWindow({ //吹き出しの追加
-                    content: 'caption' //吹き出しに表示する内容
+            infoWindow[j] = new google.maps.InfoWindow({ //吹き出しの追加
+                    content: "<%= photo.caption %>"  //吹き出しに表示する内容
                     //content: document.getElementById('infowindw')
                 });
-            marker.addListener('click', function() { //マーカーをクリックしたとき
-                    infoWindow.open(map, marker); //吹き出しの表示
-                });
+            aaa(j);
+            <% i += 1 %>;
             <% end %>
+        }
+        function aaa(i){
+                        marker[i].addListener('click', function() { //マーカーをクリックしたとき
+                    infoWindow[i].open(map, marker[i]); //吹き出しの表示
+                });
         }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOlapdhQ2xu4MKQzcqUDSrLCxBBHtwpns&callback=initMap" async defer></script>
