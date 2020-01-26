@@ -30,10 +30,14 @@
                             <th class="border-top-0">
                                 <h4>写真情報</h4>
                             </th>
+                            <% if user_signed_in? %>
+                            <% if @photo.user_id == current_user.id %>
                             <th class="border-top-0">
                                 <%= link_to '編集', edit_photo_path(@photo.id), class: 'btn btn-primary' %>
                                 <%= link_to '削除', photo_path(@photo.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
                             </th>
+                            <% end %>
+                            <% end %>
                         </tr>
                         <tr>
                             <td><label>タイトル</label></td>

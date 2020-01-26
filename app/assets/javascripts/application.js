@@ -12,7 +12,7 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
+//	ターボリンク削除
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets

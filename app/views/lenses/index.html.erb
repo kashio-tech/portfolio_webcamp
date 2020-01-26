@@ -37,8 +37,12 @@
                     <%=lense.model %>
                 </td>
                 <td>
+                    <% if  user_signed_in? %>
+                    <% if lense.user_id == current_user.id %>
                     <%= link_to "編集する", edit_lense_path(lense.id), class: 'btn btn-sm btn-primary' %>
                     <%= link_to '削除', lense_path(lense.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-sm btn-danger'%>
+                    <% end %>
+                    <% end %>
                 </td>
             </tr>
             <% end %>

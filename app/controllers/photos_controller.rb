@@ -13,7 +13,7 @@ class PhotosController < ApplicationController
 	def create
 		@photo = Photo.new(photo_params)
 		@photo.user_id = current_user.id
-		if params[:selected_button_camera] == "new_camera"
+		if params[:selected_button_camera] == "new_camera"	#params[:name値]　== value値
 			@photo.camera_maker = params[:photo][:camera][:maker]
 			@photo.camera_model = params[:photo][:camera][:model]
 			Camera.create(user_id: current_user.id, maker: params[:photo][:camera][:maker], model: params[:photo][:camera][:model])
@@ -22,7 +22,7 @@ class PhotosController < ApplicationController
 			@photo.camera_maker = @camera.maker
 			@photo.camera_model = @camera.model
       	end
-      	if params[:selected_button_lense] == "new_lense"
+      	if params[:selected_button_lense] == "new_lense"	#params[:name値]　== value値
 			@photo.lense_maker = params[:photo][:lense][:maker]
 			@photo.lense_model = params[:photo][:lense][:model]
 			Lense.create(user_id: current_user.id, maker: params[:photo][:lense][:maker], model: params[:photo][:lense][:model])
