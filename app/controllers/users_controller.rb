@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
+	before_action	:authenticate_user!, only: [:edit, :update]
 	def show
 		@user = User.find(params[:id])
 		@photos = @user.photos.all.order(id: "desc")
 	end
 	def show_map
 		@user = User.find(params[:id])
-		@photos = @user.photos.all
+		@photos = @user.photos.all.order(id: "desc")
 	end
 	def edit
 		@user = User.find(params[:id])
