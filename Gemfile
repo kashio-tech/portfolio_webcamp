@@ -77,3 +77,8 @@ gem 'ransack'
 gem 'paranoia'
 gem 'enum_help'
 gem 'rails-i18n'
+
+
+group :production do
+  gem 'mysql2'
+end
