@@ -14,25 +14,38 @@ class PhotosController < ApplicationController
 		@photo = Photo.new(photo_params)
 		@photo.user_id = current_user.id
 		if params[:selected_button_camera] == "new_camera"	#params[:name値]　== value値
+			if params[:photo][:camera][:maker] !=nil && params[:photo][:camera][:model] !=nil
 			@photo.camera_maker = params[:photo][:camera][:maker]
 			@photo.camera_model = params[:photo][:camera][:model]
 			Camera.create(user_id: current_user.id, maker: params[:photo][:camera][:maker], model: params[:photo][:camera][:model])
+			end
 		elsif  params[:selected_button_camera] == "registered_camera"
+			if params[:photo][:camera_id] != ""
 			@camera = Camera.find(params[:photo][:camera_id])
 			@photo.camera_maker = @camera.maker
 			@photo.camera_model = @camera.model
+			end
       	end
       	if params[:selected_button_lense] == "new_lense"	#params[:name値]　== value値
+      		if params[:photo][:lense][:maker] != nil && params[:photo][:lense][:model] !=nil
 			@photo.lense_maker = params[:photo][:lense][:maker]
 			@photo.lense_model = params[:photo][:lense][:model]
 			Lense.create(user_id: current_user.id, maker: params[:photo][:lense][:maker], model: params[:photo][:lense][:model])
+			end
 		elsif  params[:selected_button_lense] == "registered_lense"
+			if params[:photo][:lense_id] != ""
 			@lense = Lense.find(params[:photo][:lense_id])
 			@photo.lense_maker = @lense.maker
 			@photo.lense_model = @lense.model
+			end
       	end
-		@photo.save
-		redirect_to photos_path
+		if @photo.save
+			redirect_to photos_path
+		else
+			@new_camera = Camera.new
+			@new_lense = Lense.new
+			render :new
+		end
 	end
 
 	def show

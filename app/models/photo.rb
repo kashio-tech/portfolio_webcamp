@@ -7,9 +7,11 @@ class Photo < ApplicationRecord
 	validates	:caption, presence: true
 	validates	:latitude, presence: true
 	validates	:longitude, presence: true
-	validates	:maker, presence: true
-	validates	:camera_model,	presence: true
-	validates	:camera_maker, presence: true
+	validates	:taken_at, presence: true
+	validates	:speed, presence: true
+	validates	:f_number, presence: true
+	validates	:iso_speed, presence: true
+
 
 	def favorited_by?(user)
 		if  user.present?

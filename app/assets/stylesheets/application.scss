@@ -27,13 +27,11 @@
 
 
 /*フッターの固定のCSS*/
-.wrapper {
-  min-height: calc(100vh - 70px);
-  background: #fff;
-}
 
-.footer {
+footer {
   height: 50px;
+  background-color: gray;
+  padding: 15px 0;
 }
 
 /*カテゴリ-検索のCSS*/
@@ -77,5 +75,10 @@
 
 .menu:hover .sub-menu {
   display: inline-block;
+}
+
+.logo-size{
+  height: 7px;
+  width:  10px;
 }
 

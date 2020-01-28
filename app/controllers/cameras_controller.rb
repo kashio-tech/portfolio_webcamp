@@ -10,8 +10,11 @@ class CamerasController < ApplicationController
 	def create
 		@camera = Camera.new(camera_params)
 		@camera.user_id = current_user.id
-		@camera.save
+		if @camera.save
 		redirect_to	cameras_path
+		else
+			render "/photos/new.html.erb"
+		end
 	end
 	def edit
 		@camera = Camera.find(params[:id])

@@ -54,12 +54,12 @@
                                 <%= @photo.caption %>
                             </td>
                         </tr>
-                        <tr>
+<!--                         <tr>
                             <td><label>ジャンル</label></td>
                             <td>
                                 <%#= @photo.category.name %>
                             </td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td><label>撮影場所</label></td>
                             <td>
@@ -70,8 +70,7 @@
                         <tr>
                             <td><label>撮影日時</label></td>
                             <td>
-                                <%#= @photo.taken_at.strftime('%Y年%m月%d日') %>
-                                <%= @photo.taken_at %>
+                                <%= @photo.taken_at.strftime('%Y年%m月%d日') %>
                             </td>
                         </tr>
                     </tbody>
@@ -165,7 +164,7 @@
         </div>
     </div>
     <%= form_for [@photo, @post_comment] do |f| %>
-    <div class="row">
+    <div class="row mb-4">
         <%= f.text_area :comment, class: "col-sm-8 ml-3" %>
         <div class="col-sm-2">
             <%= f.submit "送信", class: "btn btn-primary" %>
@@ -191,7 +190,7 @@
 
     <body>
         <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
-        <div id="infowindw">sample1</div>
+        <div id="infowindw"></div>
         <script>
         var map;
         var marker;
@@ -217,7 +216,7 @@
             marker = new google.maps.Marker({ // マーカーの追加
                 position: center, // マーカーを立てる位置を指定
                 map: map, // マーカーを立てる地図を指定
-                title: "sample"
+                title: "<%= @photo.title %>"
             });
 
             //     infoWindow = new google.maps.InfoWindow({ //吹き出しの追加

@@ -78,6 +78,9 @@ gem 'paranoia'
 gem 'enum_help'
 gem 'rails-i18n'
 
+#環境変数を扱う
+gem 'dotenv-rails'
+
 
 group :production do
   gem 'mysql2'

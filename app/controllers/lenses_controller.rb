@@ -10,8 +10,11 @@ class LensesController < ApplicationController
 	def create
 		@lense = Lense.new(lense_params)
 		@lense.user_id = current_user.id
-		@lense.save
+		if @lense.save
 		redirect_to	lenses_path
+		else
+			render "/photos/new.html.erb"
+		end
 	end
 	def edit
 		@lense = Lense.find(params[:id])

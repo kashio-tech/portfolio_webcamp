@@ -68,6 +68,7 @@
             });
 
             infoWindow[j] = new google.maps.InfoWindow({ //吹き出しの追加
+
                     content: "タイトル： <%= photo.title %><br>"+ "説明： <%= photo.caption %><br>"  + "撮影日時： <%= photo.taken_at %>" //吹き出しに表示する内容
                     //content: document.getElementById('infowindw')
                 });

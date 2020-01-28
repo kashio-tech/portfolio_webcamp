@@ -8,12 +8,16 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script src="https://kit.fontawesome.com/9323dd025d.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <nav class="navbar navbar-light bg-light">
-        <%=  link_to "INSTAGRAM(仮)", "/", id: "logo", class: "navbar-brand" %>
+        <div class="navbar-brand ">
+            <%= link_to photos_path do %>
+            <%= image_tag "logo.png", :size => '150x70' %>
+            <%end%>
+        </div>
         <form class="form-inline">
             <!-- ログインしている時  -->
             <% if  user_signed_in? %>
@@ -47,13 +51,16 @@
                 </li>
             </ul>
             <% end %>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <!--             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
         </form>
     </nav>
     <div class="container-fluid">
         <%= yield %>
     </div>
+    <footer class="align-center  text-center">
+        <h6 class="text-center">@CopyRight PHOTOxMAP.inc</h6>
+    </footer>
 </body>
 
 </html>

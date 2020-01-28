@@ -1,7 +1,5 @@
 <div class="container">
-    <h2>新規登録画面</h2>
-    <div class="row">
-        <% if @photo.errors.any? %>
+            <% if @photo.errors.any? %>
         <div id="error_explanation">
             <ul>
                 <% @photo.errors.full_messages.each do |message| %>
@@ -12,6 +10,8 @@
             </ul>
         </div>
         <% end %>
+    <h2>新規登録画面</h2>
+    <div class="row">
         <div>
             <h4>操作方法</h4>
             <p>①右クリックで保存したい位置にマーカーを表示<br>②ドラッグ＆ドロップでピン差し位置を調整</p>
@@ -22,7 +22,6 @@
 
         <head>
             <meta charset="utf-8">
-            <title>Simple Map Sample</title>
             <meta charset="utf-8">
             <style>
                 /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
@@ -35,7 +34,7 @@
 
         <body>
             <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
-            <div id="infowindw">sample1</div>
+            <div id="infowindw"></div>
             <script>
                 var map;
      var marker;
@@ -55,7 +54,7 @@
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
             center: { lat: 35.65813908034716, lng: 139.69948625369216 }, // 地図の中心を指定
-            zoom: 16 // 地図のズームを指定
+            zoom: 2 // 地図のズームを指定
         });
 
         //     marker = new google.maps.Marker({ // マーカーの追加
@@ -85,14 +84,6 @@
              myFnc();
              deleteMarkers();
 
-            //マーカーを削除する
-            function deleteMakers() {
-                if(marker != null){
-                marker.setMap(null);
-                    }
-                marker = null;
-            }
-
 
             marker = new google.maps.Marker({
 
@@ -100,7 +91,7 @@
              // マーカーの追加
                 position: e.latLng, //イベントの発生した緯度・経度（位置）
                 map: map, //this は map を意味します
-                title: "sample1",
+                title: "撮影場所の登録",
                 draggable: true,
                 disableDoubleClickZoom: true,
                 animation: google.maps.Animation.DROP
@@ -154,7 +145,7 @@
         </body>
 
         </html>
-<!--         <p>マーカーのある位置の<br>
+        <!--         <p>マーカーのある位置の<br>
             緯度 <input type="text" id="lat" value="" onchange="myFnc();"><br>
             経度 <input type="text" id="lng" value=""><br>
             地図上をクリックするとマーカーを移動できます。</p> -->
@@ -170,15 +161,19 @@
             <%= f.text_field :title %>
             <h5>説明</h5>
             <%= f.text_area :caption %>
-            <h5>ジャンル</h5>
-            <%= f.collection_select :category_id, Category.all, :id, :name, :prompt => "選択してください" %>
+            <!--  <h5>ジャンル</h5> -->
+            <%#= f.collection_select :category_id, Category.all, :id, :name, :prompt => "選択してください" %>
             <h5>撮影場所</h5>
-            <p>緯度
-                <%= f.text_field :latitude, id: "lat_data" %>
+            <p>緯度 <input type="text" id="lat" value="" onchange="myFnc();"></p>
+            <p>経度 <input type="text" id="lng" value=""></p>
+            <p>
+                <%= f.hidden_field :latitude, id: "lat_data" %>
             </p>
-            <p>経度
-                <%= f.text_field :longitude, id: "lng_data" %>
+            <p>
+                <%= f.hidden_field :longitude, id: "lng_data" %>
             </p>
+        </div>
+        <div class="col-sm-4">
             <h5>撮影日時</h5>
             <%= f.text_field :taken_at %>
             <h5>シャッタースピード</h5>
@@ -192,7 +187,7 @@
         </div>
         <!-- 撮影場所の登録 -->
         <!-- カメラの登録 -->
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             <h5>カメラ情報</h5>
             <label class="mr-4">
                 <input type="radio" name="selected_button_camera" value="registered_camera" onclick="select_camera1();" checked="checked" />登録カメラから選択</label>
@@ -203,8 +198,10 @@
             </div>
             <div id="Box2">
                 <%= f.fields_for(@new_camera) do |camera| %>
-                <p>メーカー
-                    <%= camera.text_field :maker %>　型式
+                <p class="mb-2">メーカー
+                    <%= camera.text_field :maker %>
+                </p>
+                <p>型式
                     <%= camera.text_field :model %>
                 </p>
             </div>
@@ -220,8 +217,10 @@
             </div>
             <div id="Box4">
                 <%= f.fields_for(@new_lense) do |lense| %>
-                <p>メーカー
-                    <%= lense.text_field :maker %>　型式
+                <p class="mb-2">メーカー
+                    <%= lense.text_field :maker %>
+                </p>
+                <p>型式
                     <%= lense.text_field :model %>
                 </p>
             </div>
@@ -231,8 +230,7 @@
         <% end %>
     </div>
 </div>
-            <!------------------------入力項目のラジオボタン選択に対応した表示切替------------------------------------------->
-
+<!------------------------入力項目のラジオボタン選択に対応した表示切替------------------------------------------->
 <script>
 function select_camera1() {
     radio = document.getElementsByName('selected_button_camera')
@@ -258,7 +256,7 @@ function select_lense1() {
 }
 // //////////////////画面表示時のラジオボタン選択状態///////////////////////////////////////////////////////////////////
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('Box1').style.display = "";     //表示
+    document.getElementById('Box1').style.display = ""; //表示
     document.getElementById('Box2').style.display = "none"; //非表示
     document.getElementById('Box3').style.display = "";
     document.getElementById('Box4').style.display = "none";
