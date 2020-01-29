@@ -30,7 +30,7 @@
 
     <body>
         <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
-        <div id="infowindw">sample1</div>
+        <div id="infowindw"></div>
         <script>
         var map;
         // var marker;
@@ -82,7 +82,7 @@
                 });
         }
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOlapdhQ2xu4MKQzcqUDSrLCxBBHtwpns&callback=initMap" async defer></script>
+        <script src='https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%= ENV['GOOGLE_MAP_API']%>&callback=initMap' async defer></script>
     </body>
 
     </html>

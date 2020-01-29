@@ -30,4 +30,3 @@ production:
   host: <%= ENV['YML_HOST'] %>
   username: <%= ENV['YML_NAME'] %>
   password: <%= ENV['YML_PASS'] %>
-
