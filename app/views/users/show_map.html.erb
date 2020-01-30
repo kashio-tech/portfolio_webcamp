@@ -57,8 +57,8 @@
             });
             <% i = 0 %>
             <% @photos.each do |photo| %>
-            // <%= aaa = @photos.length %>
-            // console.log(<%= aaa %>);
+            // <%= photos_length = @photos.length %>
+            // console.log(<%= photos_length %>);
             j = <%= i %>
             marker[j] = new google.maps.Marker({ // マーカーの追加
                 position: {lat: <%= photo.latitude %>, lng: <%= photo.longitude %>}, // マーカーを立てる位置を指定
@@ -72,11 +72,11 @@
                     content: "タイトル： <%= photo.title %><br>"+ "説明： <%= photo.caption %><br>"  + "撮影日時： <%= photo.taken_at %>" //吹き出しに表示する内容
                     //content: document.getElementById('infowindw')
                 });
-            aaa(j);
+            individual_marker(j);
             <% i += 1 %>;
             <% end %>
         }
-        function aaa(i){
+        function individual_marker(i){
                         marker[i].addListener('click', function() { //マーカーをクリックしたとき
                     infoWindow[i].open(map, marker[i]); //吹き出しの表示
                 });
