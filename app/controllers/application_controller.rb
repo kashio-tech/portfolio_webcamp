@@ -30,8 +30,8 @@ class ApplicationController < ActionController::Base
 	def search
 		@search = Photo.ransack(params[:q])
 		@photos = @search.result(distinct: true).order(id: "desc")
-		if params[:q] != nil
- 			if params[:q][:title_or_caption_cont] != ""
+		if params[:q] != nil		#マイページ等のリンククリック時にindexへの移動を防止　ex)リンククリック時、params[:q] == nil
+ 			if params[:q][:title_or_caption_cont] != "" #検索ワード記入無し時に検索クリックでindexへの移動を防止　ex)空ワード検索時、params[:q][:title_or_caption_cont] == ""
  			render '/photos/index'
 			end
 		end
