@@ -1,7 +1,8 @@
 class PhotosController < ApplicationController
 	before_action	:authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 	def index
-		@photos = Photo.all.order(id: "desc")
+		#@photos = Photo.all.order(id: "desc")
+		p "----------------------index"
 	end
 
 	def new

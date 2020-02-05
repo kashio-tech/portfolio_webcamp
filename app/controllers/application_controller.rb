@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-		before_action :configure_permitted_parameters, if: :devise_controller?
+		before_action 	:configure_permitted_parameters, if: :devise_controller?
+		before_action	:search
 
 	def after_sign_up_path_for(resource)
 		case resource
@@ -24,6 +25,16 @@ class ApplicationController < ActionController::Base
     	else
       		new_user_session_path
   		end
+	end
+
+	def search
+		@search = Photo.ransack(params[:q])
+		@photos = @search.result(distinct: true).order(id: "desc")
+		if params[:q] != nil		#マイページ等のリンククリック時にindexへの移動を防止　ex)リンククリック時、params[:q] == nil
+ 			if params[:q][:title_or_caption_cont] != "" #検索ワード記入無し時に検索クリックでindexへの移動を防止　ex)空ワード検索時、params[:q][:title_or_caption_cont] == ""
+ 			render '/photos/index'
+			end
+		end
 	end
 
 	protected
