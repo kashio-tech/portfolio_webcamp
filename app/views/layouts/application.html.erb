@@ -8,7 +8,6 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script src="https://kit.fontawesome.com/9323dd025d.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -36,6 +35,7 @@
                     <li class="nav-item">
                         <%= link_to "   Logout", destroy_user_session_path, method: :delete, class: "fas fa-sign-out-alt mr-4 text-dark" %>
                     </li>
+                    <li><%= render 'layouts/search' %></li>
                 </ul>
                 <!-- ログインしていない時 -->
                 <% else %>
@@ -50,10 +50,9 @@
                     <li>
                         <%= link_to "   Login", new_user_session_path, class: 'fas fa-sign-in-alt mr-4 text-dark' %>
                     </li>
+                    <li><%= render 'layouts/search' %></li>
                 </ul>
                 <% end %>
-                <!--             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
             </form>
         </nav>
         <div class="container-fluid mb-4">
