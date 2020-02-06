@@ -2,7 +2,6 @@ class PhotosController < ApplicationController
 	before_action	:authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 	def index
 		#@photos = Photo.all.order(id: "desc")
-		p "----------------------index"
 	end
 
 	def new
@@ -52,6 +51,8 @@ class PhotosController < ApplicationController
 	def show
 		@photo = Photo.find(params[:id])
 		@post_comment = PostComment.new
+		@search = Photo.ransack(params[:q])
+		@photos = @search.result(distinct: true).order(id: "desc")
 	end
 
 	def edit
