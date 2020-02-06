@@ -1,6 +1,7 @@
     <div class="container-fluid text-center bg-3 mt-5">
         <div class="row">
             <% @photos.each do |photo| %>
+            <%if photo.user.present? %>  <!-- paeanoiaでuser削除時に投稿写真はdependentで削除しないため記述 -->
             <div class="col-sm-3">
                 <%= link_to photo_path(photo.id), class: 'text-dark' do %>
                 <%= attachment_image_tag photo, :image, :fill, 250, 250, fallback: "no_image.jpg", :width => "250", :height => "250" %>
@@ -29,6 +30,7 @@
                     </tr>
                 </table>
             </div>
+            <% end %>
             <% end %>
         </div>
     </div>
