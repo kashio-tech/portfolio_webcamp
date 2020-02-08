@@ -23,4 +23,11 @@ Rails.application.routes.draw do
   resources :cameras, only: [:index, :create, :edit, :update, :destroy]
   resources :lenses,  only: [:index, :create, :edit, :update, :destroy]
 
+  namespace :admin do
+    root :to => 'photos#index'
+    resources :photos
+    resources :users do
+      patch :toggle_satus
+    end
+  end
 end
