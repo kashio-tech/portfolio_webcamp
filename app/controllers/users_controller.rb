@@ -18,6 +18,14 @@ class UsersController < ApplicationController
 		redirect_to user_path(@user.id)
 	end
 
+	def destroy
+		user = User.find(params[:id])
+		user.destroy
+		user.status == "無効"
+		user.save
+		redirect_to root_path
+	end
+
 
 	private
 	def user_params

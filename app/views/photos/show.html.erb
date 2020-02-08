@@ -31,30 +31,28 @@
                             <th class="border-top-0">
                                 <h4>写真情報</h4>
                             </th>
-                            <% if user_signed_in? %>
-                            <% if @photo.user_id == current_user.id %>
                             <th class="border-top-0">
-                                <%= link_to '編集', edit_photo_path(@photo.id), class: 'btn btn-primary' %>
+                                <% if user_signed_in? && @photo.user_id == current_user.id %>
+                                <%= link_to '編集', edit_photo_path(@photo.id), class: 'btn btn-primary mr-4' %>
                                 <%= link_to '削除', photo_path(@photo.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
+                                <% end %>
                             </th>
-                            <% end %>
-                            <% end %>
                         </tr>
+                    </thead>
+                    <tbody>
                         <tr>
                             <td><label>タイトル</label></td>
                             <td>
                                 <%= @photo.title %>
                             </td>
                         </tr>
-                    </thead>
-                    <tbody>
                         <tr>
                             <td><label>説明</label></td>
                             <td>
                                 <%= @photo.caption %>
                             </td>
                         </tr>
-<!--                         <tr>
+                        <!--                         <tr>
                             <td><label>ジャンル</label></td>
                             <td>
                                 <%#= @photo.category.name %>
@@ -134,7 +132,7 @@
                             <%= @photo.iso_speed %>
                         </td>
                     </tr>
-<!--                     <tr>
+                    <!--                     <tr>
                         <td><label>ホワイトバランス</label></td>
                         <td>
                             <%= @photo.white_balance %>
@@ -228,7 +226,9 @@
             //     });
         }
         </script>
-        <script src='https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%= ENV['GOOGLE_MAP_API']%>&callback=initMap' async defer></script>
+        <script src='https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%= ENV[' GOOGLE_MAP_API']%>
+        & callback = initMap ' async defer>
+        </script>
     </body>
 
     </html>
