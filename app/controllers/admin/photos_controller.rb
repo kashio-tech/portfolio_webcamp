@@ -1,8 +1,9 @@
 class Admin::PhotosController < ApplicationController
 before_action :authenticate_admin!
   def index
-  	@user = User.with_deleted.find(params[:id])
-  	@photos = @user.photos.all
+  	#@user = User.with_deleted.find(params[:id])
+    @user = User.with_deleted
+  	@photos = Photo.all.order(id: "desc")
   end
 
   def new

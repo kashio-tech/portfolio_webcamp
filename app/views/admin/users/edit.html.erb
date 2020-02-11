@@ -1,0 +1,57 @@
+<div class="container mt-5">
+    <h2>会員編集画面</h2>
+    <%= form_for(@user, url: admin_user_path(@user.id)) do |f| %>
+    <table class="table mb-4">
+        <tr>
+            <td>氏名　</td>
+            <td>
+                <%= f.text_field :last_name %>
+                <%= f.text_field :first_name %>
+            </td>
+        </tr>
+        <tr>
+            <td>フリガナ　</td>
+            <td>
+                <%= f.text_field :last_name_kana %>
+                <%= f.text_field :first_name_kana %>
+            </td>
+        </tr>
+        <tr>
+            <td>表示名　</td>
+            <td>
+                <%= f.text_field :display_name %>
+            </td>
+        </tr>
+        <tr>
+            <td>メールアドレス　</td>
+            <td>
+                <%= f.email_field :email %>
+            </td>
+        </tr>
+        <tr>
+            <td>アイコン画像<br>
+            </td>
+            <td>
+                <div class="profile_image">
+                    <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, class: "rounded-circle profile-thumb", fallback: "no_image.jpg" %>
+                    <%= form_for([:admin, @user]) do |delete| %>
+                    <%= delete.submit "アイコン削除", name: "delete_profile_image", class: "btn btn-warning", data: {confirm: "アイコン画像を削除しますか？"}  %>
+                    <% end %>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="row">
+        <div class="col-sm-3">
+            <%= f.submit "変更を保存する",class:"btn btn-md btn-primary" %>
+            <% end %>
+        </div>
+        <div class="col-sm-2">
+            <% if @user.status == "有効" %>
+            <%= link_to "退会済にする", admin_user_toggle_status_path(@user), class: "btn btn-danger", method: :patch, data: {confirm: "本当に退会させますか？"} %>
+            <% else %>
+            <%= link_to "有効会員にする", admin_user_toggle_status_path(@user), class: "btn btn-info", method: :patch %>
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -7,15 +7,25 @@ class Admin::UsersController < ApplicationController
 	def show
 	  	@user = User.with_deleted.find(params[:id])
 	end
+	def show_photo
+		@user = User.with_deleted.find(params[:id])
+		@photos = @user.photos.all.order(id: "desc")
+	end
 
 	def edit
 	  	@user = User.with_deleted.find(params[:id])
 	end
 
 	def update
-	  	user = User.with_deleted.find(params[:id])
-	  	user.update(user_params)
-	  	redirect_to admin_user_path(user.id)
+	  	@user = User.with_deleted.find(params[:id])
+	  	if params[:delete_profile_image]
+			@user.profile_image = nil
+			@user.save
+			render 'edit'
+			return
+		end
+	  	@user.update(user_params)
+	  	redirect_to admin_user_path(@user.id)
 	end
 
 	def toggle_status
