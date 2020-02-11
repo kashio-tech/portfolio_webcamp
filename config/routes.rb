@@ -24,10 +24,13 @@ Rails.application.routes.draw do
   resources :lenses,  only: [:index, :create, :edit, :update, :destroy]
 
   namespace :admin do
-    root :to => 'photos#index'
+    root :to => 'users#index'
     resources :photos
     resources :users do
-      patch :toggle_satus
+      patch :toggle_status
+      member do
+        get 'show_photo'
+      end
     end
   end
 end

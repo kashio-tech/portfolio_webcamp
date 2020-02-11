@@ -1,9 +1,9 @@
     <div class="container-fluid text-center bg-3 mt-5">
         <div class="row">
             <% @photos.each do |photo| %>
-            <%if photo.user.present? %>  <!-- paeanoiaでuser削除時に投稿写真はdependentで削除しないが、画像は表示させないため記述 -->
+            <%if photo.user.present? %> <!-- paeanoiaでuser削除時に投稿写真はdependentで削除しないが、画像は表示させないため記述 -->
             <div class="col-sm-3">
-                <%= link_to photo_path(photo.id), class: 'text-dark' do %>
+                <%= link_to admin_photo_path(photo.id), class: 'text-dark' do %>
                 <%= attachment_image_tag photo, :image, :fill, 250, 250, fallback: "no_image.jpg", :width => "250", :height => "250" %>
                 <% end %>
                 <table class="table table-sm table-borderless" style="line-height: 50%;">
