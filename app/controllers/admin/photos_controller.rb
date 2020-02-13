@@ -6,17 +6,8 @@ before_action :authenticate_admin!
   	@photos = Photo.all.order(id: "desc")
   end
 
-  def new
-  	@photo = Photo.new
-  end
-
-  def create
-  	@photo = Photo.new(photo_params)
-  	if @photo.save
-  	redirect_to admin_photos_path
-    else
-      render :new
-    end
+  def show
+    @photo = Photo.find(params[:id])
   end
 
   def edit
@@ -31,8 +22,10 @@ before_action :authenticate_admin!
     end
   end
 
-  def show
-    @photo = Photo.find(params[:id])
+  def destroy
+    photo = Photo.find(params[:id])
+    photo.destroy
+    redirect_to photos_path
   end
 
   private

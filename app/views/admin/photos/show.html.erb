@@ -33,7 +33,7 @@
                             </th>
                             <th class="border-top-0">
                                 <%= link_to '編集', edit_admin_photo_path(@photo.id), class: 'btn btn-primary mr-4' %>
-                                <%= link_to '削除', photo_path(@photo.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
+                                <%= link_to '削除', admin_photo_path(@photo.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
                             </th>
                         </tr>
                     </thead>
@@ -150,7 +150,7 @@
                     <%= post_comment.user.display_name %></a>
                 <%= post_comment.created_at.strftime("%Y/%m/%d") %>
                 <%= post_comment.comment %>
-                <%= link_to '削除', photo_post_comment_path(@photo.id, post_comment.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
+                <%= link_to '削除', admin_photo_post_comment_path(@photo.id, post_comment.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
             </div>
             <% end %>
         </div>
