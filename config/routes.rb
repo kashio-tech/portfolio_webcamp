@@ -25,8 +25,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root :to => 'users#index'
-    resources :photos
-    resources :users do
+    resources :photos, only: [:index, :show, :edit, :update, :destroy] do
+      resources :post_comments, only: [:destroy]
+    end
+    resources :users, only: [:index, :show, :edit, :update] do
       patch :toggle_status
       member do
         get 'show_photo'
