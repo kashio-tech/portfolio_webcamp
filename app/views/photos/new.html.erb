@@ -1,15 +1,15 @@
 <div class="container">
-            <% if @photo.errors.any? %>
-        <div id="error_explanation">
-            <ul>
-                <% @photo.errors.full_messages.each do |message| %>
-                <li>
-                    <%= message %>
-                </li>
-                <% end %>
-            </ul>
-        </div>
-        <% end %>
+    <% if @photo.errors.any? %>
+    <div id="error_explanation">
+        <ul>
+            <% @photo.errors.full_messages.each do |message| %>
+            <li>
+                <%= message %>
+            </li>
+            <% end %>
+        </ul>
+    </div>
+    <% end %>
     <h2>新規登録画面</h2>
     <div class="row">
         <div>
@@ -29,15 +29,27 @@
         height: 400px;
         width: 1000px;
     }
+    #header {
+          padding: 3px;
+          width: 100%;
+          font-family: Meriyo UI;
+          font-size: 14px;
+          color: #000;
+      }
     </style>
         </head>
 
         <body>
+            <div id="header"><b>Google Maps - 場所検索</b></div>
+            <div>施設名称検索 （例：東京、熊本城）</div>
+            <input type="text" id="keyword"><button id="search">検索実行</button>
+            <button id="clear">結果クリア</button>
             <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
             <div id="infowindw"></div>
             <script>
                 var map;
-     var marker;
+                var marker;
+                var center = { lat: 37.67229496806523, lng: 137.88838989062504 };
     // var infoWindow;
     // var center = {
     //     lat: 35.65813908034716, // 緯度
@@ -53,9 +65,68 @@
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
-            center: { lat: 35.65813908034716, lng: 139.69948625369216 }, // 地図の中心を指定
+            center: center, // 地図の中心を指定
             zoom: 2 // 地図のズームを指定
         });
+
+
+////////////////////////////////////////////////////以下、geocordingを挿入
+
+// 検索実行ボタンが押下されたとき
+        document.getElementById('search').addEventListener('click', function() {
+
+            var place = document.getElementById('keyword').value;
+            var geocoder = new google.maps.Geocoder(); // geocoderのコンストラクタ
+
+
+            //マップ表示
+
+
+
+            geocoder.geocode({
+                address: place
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+
+                    var bounds = new google.maps.LatLngBounds();
+
+                    for (var i in results) {
+                        if (results[0].geometry) {
+                            // 緯度経度を取得
+                            latlng = results[0].geometry.location;
+                            // 住所を取得
+                            var address = results[0].formatted_address;
+                            // 検索結果地が含まれるように範囲を拡大
+                            bounds.extend(latlng);
+                            // マーカーのセット
+                            //setMarker(latlng);
+                            // マーカーへの吹き出しの追加
+                            //setInfoW(place, latlng, address);
+                            // マーカーにクリックイベントを追加
+                            //markerEvent();
+                            //alert(latlng);
+                            map.setZoom(16);
+                            map.setCenter(latlng);
+
+                            console.log(map);
+                        }
+                    }
+                } else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
+                    alert("見つかりません");
+                } else {
+                    console.log(status);
+                    alert("エラー発生");
+                }
+            });
+
+        // 結果クリアーボタン押下時
+        document.getElementById('clear').addEventListener('click', function() {
+            map.setZoom(2);
+            map.setCenter(center);
+        });
+    });
+///////////////////////////////////////////////
+
 
         //     marker = new google.maps.Marker({ // マーカーの追加
         //         position: center, // マーカーを立てる位置を指定
@@ -100,7 +171,7 @@
 
 
             var infoWindow = new google.maps.InfoWindow({
-                content: "ドッラグで移動" + "<br>" + "バツで閉じる" //イベントの発生した位置を toString() で文字列に変換
+                content: "ドラッグで移動" + "<br>" + "バツで閉じる" //イベントの発生した位置を toString() で文字列に変換
             });
 
 
@@ -138,10 +209,9 @@
           }
           marker = null;
         }
-
     }
     </script>
-            <script src='https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%= ENV['GOOGLE_MAP_API']%>&callback=initMap' async defer></script>
+            <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%=ENV['GOOGLE_MAP_API']%>&callback=initMap" async defer></script>
         </body>
 
         </html>
