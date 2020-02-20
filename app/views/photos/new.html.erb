@@ -44,7 +44,7 @@
             <div>施設名称検索 （例：東京、熊本城）</div>
             <input type="text" id="keyword"><button id="search">検索実行</button>
             <button id="clear">結果クリア</button>
-            <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
+            <div id="map" class="mt-1"></div><!-- 地図を表示する div 要素（id="map"）-->
             <div id="infowindw"></div>
             <script>
                 var map;
@@ -128,25 +128,6 @@
 ///////////////////////////////////////////////
 
 
-        //     marker = new google.maps.Marker({ // マーカーの追加
-        //         position: center, // マーカーを立てる位置を指定
-        //         map: map, // マーカーを立てる地図を指定
-        //         title: "sample"
-        //     });
-
-        //     infoWindow = new google.maps.InfoWindow({ //吹き出しの追加
-        //         //content: '<div class = "map">SAMPLE</div>' //吹き出しに表示する内容
-        //         content: document.getElementById('infowindw')
-        //     });
-        //     marker.addListener('click', function() { //マーカーをクリックしたとき
-        //         infoWindow.open(map, marker); //吹き出しの表示
-        //     });
-        // map.addListener('click', function(e) {
-        //     this.setCenter(e.latLng);
-        //     this.panTo(e.latLng);   //アニメーションで中心位置を移動
-        // });
-
-
         //マップのイベント
         google.maps.event.addListener(map, 'rightclick', function(e) {
             //☆表示している地図上の緯度経度
@@ -171,7 +152,7 @@
 
 
             var infoWindow = new google.maps.InfoWindow({
-                content: "ドラッグで移動" + "<br>" + "バツで閉じる" //イベントの発生した位置を toString() で文字列に変換
+                content: "ドラッグで移動" + "<br>" + "バツで閉じる"
             });
 
 
@@ -180,7 +161,6 @@
             google.maps.event.addListener(marker, 'click', function() {
                 //マーカーをクリックしたとき
                 infoWindow.open(map, marker); //marker の位置に情報ウィンドウを表示
-                //myFnc();
 
             });
 
@@ -215,14 +195,10 @@
         </body>
 
         </html>
-        <!--         <p>マーカーのある位置の<br>
-            緯度 <input type="text" id="lat" value="" onchange="myFnc();"><br>
-            経度 <input type="text" id="lng" value=""><br>
-            地図上をクリックするとマーカーを移動できます。</p> -->
     </div>
     <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
     <div class="row mt-4">
-        <div class="col-sm-4">
+        <div class="col-lg-4 col-md-6 col-sm-12">
             <%= form_for(@photo) do |f| %>
             <!-- 写真の登録 -->
             <h5>画像選択</h5>
@@ -245,7 +221,7 @@
         </div>
         <div class="col-sm-4">
             <h5>撮影日時</h5>
-            <%= f.text_field :taken_at %>
+            <%= f.date_field :taken_at %>
             <h5>シャッタースピード</h5>
             <%= f.text_field :speed %>
             <h5>F値</h5>

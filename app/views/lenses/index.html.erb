@@ -11,14 +11,13 @@
         </ul>
     </div>
     <%# end %> -->
+    <div class="row">
     <%= form_for(@lense, url: lenses_path) do |f| %>
-    <h4>メーカー
-        <%= f.text_field :maker %>
-        型式
-        <%= f.text_field :model %>
-        <%= f.submit '追加',class:"col-xs btn btn-primary"%>
+    <h4>メーカー<%= f.text_field :maker %>
+        型式<%= f.text_field :model %>
+        <%= f.submit '追加',class:"float-right col-xs btn btn-primary ml-4"%>
     </h4>
-    <% end %>
+    <% end %></div>
     <table class="table table-hover mt-3">
         <tbody>
             <tr>
