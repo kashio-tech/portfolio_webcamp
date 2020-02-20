@@ -13,7 +13,7 @@
             </div>
             <div class="mb-4">
                 <h4>撮影者の情報</h4>
-                <%= link_to user_path(@photo.user_id), class: 'mr-4 text-dark' do %>
+                <%= link_to admin_user_path(@photo.user_id), class: 'mr-4 text-dark' do %>
                 <%= attachment_image_tag @photo.user, :profile_image, :fill, 100, 100, class: "rounded-circle profile-thumb", fallback: "no_image.jpg", :width => "50", :height => "50" %>
                 <%= @photo.user.display_name %>
                 <% end %>
@@ -25,15 +25,16 @@
         </div>
         <div class="col-sm-4">
             <div class="photo-detail">
+                <h4>写真情報
+                    <%= link_to '編集', edit_admin_photo_path(@photo.id), class: 'btn btn-primary btn-sm mr-1' %>
+                    <%= link_to '削除', admin_photo_path(@photo.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger btn-sm'%>
+                </h4>
                 <table class="table table-sm">
                     <thead>
                         <tr>
                             <th class="border-top-0">
-                                <h4>写真情報</h4>
                             </th>
                             <th class="border-top-0">
-                                <%= link_to '編集', edit_admin_photo_path(@photo.id), class: 'btn btn-primary mr-4' %>
-                                <%= link_to '削除', admin_photo_path(@photo.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
                             </th>
                         </tr>
                     </thead>
