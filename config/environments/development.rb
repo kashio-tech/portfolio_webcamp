@@ -52,6 +52,10 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+#以下は、map_newでjsファイル読み込みのために記載
+  config.assets.precompile += ['photo_new.js']
+  config.assets.precompile += ['photo_new_radio_button.js']
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 

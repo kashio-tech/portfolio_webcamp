@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+    /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+
+    #header {
+        padding: 3px;
+        width: 100%;
+        font-family: Meriyo UI;
+        font-size: 14px;
+        color: #000;
+    }
+    </style>
+</head>
+<script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%=ENV['GOOGLE_MAP_API']%>&callback=initMap" async defer></script>
+
+</html>

@@ -1,32 +1,29 @@
 <div class="container-fluid">
     <div class="row mb-4">
-            <div class="col-sm-2"><h4>マイページ</h4></div>
-            <div class="col-sm-6"><%= link_to "画像一覧(写真)", user_path(@user), class: "btn btn-primary mr-4" %></div>
-            <div class="col-sm-4">
-                <% if  user_signed_in? %>
-                <% if @user.id == current_user.id %>
-                <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-primary mr-4" %>
-                <%= link_to "カメラ編集", cameras_path, class: "btn btn-primary" %>
-                <% end %>
-                <% end %>
-            </div>
+        <div class="col-sm-2">
+            <h4>マイページ</h4>
+        </div>
+        <div class="col-sm-6">
+            <%= link_to "画像一覧(写真)", user_path(@user), class: "btn btn-primary mr-4" %>
+        </div>
+        <div class="col-sm-4">
+            <% if  user_signed_in? %>
+            <% if @user.id == current_user.id %>
+            <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-primary mr-4" %>
+            <%= link_to "カメラ編集", cameras_path, class: "btn btn-primary" %>
+            <% end %>
+            <% end %>
+        </div>
     </div>
     <!-------------------------------- ここより下は地図表示 --------------------------------->
-    <!DOCTYPE html>
-    <html>
-
-    <head>
-        <meta charset="utf-8">
-        <title>Simple Map Sample</title>
-        <meta charset="utf-8">
-        <style>
-        /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
-        #map {
-            height: 600px;
-            width: 100%;
-        }
-        </style>
-    </head>
+    <!-- /* マップを表示する div 要素の高さを必ず明示的に指定します。 */ -->
+    <%= render "/photos/map" %>
+    <style>
+    #map {
+        height: 600px;
+        width: 100%;
+    }
+    </style>
 
     <body>
         <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
@@ -34,20 +31,13 @@
         <script>
         var map;
         // var marker;
-        var marker = [];    //markerを配列で定義
-        var infoWindow = [];    //infowindowを配列で定義
+        var marker = []; //markerを配列で定義
+        var infoWindow = []; //infowindowを配列で定義
 
         var center = {
             lat: 0.0000, // 緯度
             lng: 0.0000 // 経度
         };
-
-
-        function myFnc() {
-            document.getElementById('lat_data').value = document.getElementById('lat').value;
-            document.getElementById('lng_data').value = document.getElementById('lng').value;
-        }
-
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
@@ -61,7 +51,7 @@
             // console.log(<%= photos_length %>);
             j = <%= i %>
             marker[j] = new google.maps.Marker({ // マーカーの追加
-                position: {lat: <%= photo.latitude %>, lng: <%= photo.longitude %>}, // マーカーを立てる位置を指定
+                position: { lat: <%= photo.latitude %>, lng: <%= photo.longitude %> }, // マーカーを立てる位置を指定
                 map: map, // マーカーを立てる地図を指定
                 title: "<%= photo.title %>"
 
@@ -69,29 +59,20 @@
 
             infoWindow[j] = new google.maps.InfoWindow({ //吹き出しの追加
 
-                    content: "タイトル： <%= photo.title %><br>"+ "説明： <%= photo.caption %><br>"  + "撮影日時： <%= photo.taken_at %>" //吹き出しに表示する内容
-                    //content: document.getElementById('infowindw')
-                });
+                content: "タイトル： <%= photo.title %><br>" + "説明： <%= photo.caption %><br>" + "撮影日時： <%= photo.taken_at %>" //吹き出しに表示する内容
+                //content: document.getElementById('infowindw')
+            });
             individual_marker(j);
             <% i += 1 %>;
             <% end %>
         }
-        function individual_marker(i){
-                        marker[i].addListener('click', function() { //マーカーをクリックしたとき
-                    infoWindow[i].open(map, marker[i]); //吹き出しの表示
-                });
+
+        function individual_marker(i) {
+            marker[i].addListener('click', function() { //マーカーをクリックしたとき
+                infoWindow[i].open(map, marker[i]); //吹き出しの表示
+            });
         }
         </script>
-        <script src='https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%= ENV['GOOGLE_MAP_API']%>&callback=initMap' async defer></script>
     </body>
-
-    </html>
     <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
-
-
-
-
-
-
-
 </div>
