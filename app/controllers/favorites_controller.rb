@@ -7,6 +7,7 @@ class FavoritesController < ApplicationController
             favorite.save
             redirect_back(fallback_location: root_path)
         else
+            flash[:notice] = '自身の投稿画像には「いいね」できません'
             redirect_back(fallback_location: root_path)
         end
     end
