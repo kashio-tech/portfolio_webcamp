@@ -31,7 +31,7 @@ class Admin::UsersController < ApplicationController
 	def toggle_status
 		@user = User.with_deleted.find(params[:user_id])
 		@user.update(status: @user.toggle_status)
-		if @user.status == "有効"
+		if 	@user.status == "有効"
 			@user.restore
 		else
 			@user.destroy

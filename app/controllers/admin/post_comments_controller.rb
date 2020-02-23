@@ -1,9 +1,9 @@
 class Admin::PostCommentsController < ApplicationController
 	before_action :authenticate_admin!
 	def destroy
-            comment = PostComment.find(params[:id])
-            comment.destroy
-            redirect_back(fallback_location: root_path)
+    	comment = PostComment.find(params[:id])
+        comment.destroy
+        redirect_back(fallback_location: root_path)
 	end
 
 	private

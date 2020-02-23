@@ -111,7 +111,7 @@
                                 <h4>設定</h4>
                             </th>
                             <th class="border-top-0"></th>
-                        <tr>
+                        </tr>
                     </thead>
                     <tr>
                         <td><label>シャッタースピード</label></td>
@@ -169,21 +169,7 @@
     </div>
     <% end %>
     <!-------------------------------- ここより下は地図表示 --------------------------------->
-    <!DOCTYPE html>
-    <html>
-
-    <head>
-        <meta charset="utf-8">
-        <title>Simple Map Sample</title>
-        <meta charset="utf-8">
-        <style>
-        /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-        </style>
-    </head>
+    <%= render "/photos/map" %>
 
     <body>
         <div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
@@ -197,13 +183,6 @@
             lng: <%= @photo.longitude %> // 経度
         };
 
-
-        function myFnc() {
-            document.getElementById('lat_data').value = document.getElementById('lat').value;
-            document.getElementById('lng_data').value = document.getElementById('lng').value;
-        }
-
-
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
                 center: center, // 地図の中心を指定
@@ -215,20 +194,8 @@
                 map: map, // マーカーを立てる地図を指定
                 title: "<%= @photo.title %>"
             });
-
-            //     infoWindow = new google.maps.InfoWindow({ //吹き出しの追加
-            //         //content: '<div class = "map">SAMPLE</div>' //吹き出しに表示する内容
-            //         content: document.getElementById('infowindw')
-            //     });
-            //     marker.addListener('click', function() { //マーカーをクリックしたとき
-            //         infoWindow.open(map, marker); //吹き出しの表示
-            //     });
         }
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%=ENV['GOOGLE_MAP_API']%>&callback=initMap" async defer>
-        </script>
-    </body>
-
-    </html>
+            </body>
     <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
 </div>

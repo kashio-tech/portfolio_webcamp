@@ -17,28 +17,7 @@
             <p>①右クリックで保存したい位置にマーカーを表示<br>②ドラッグ＆ドロップでピン差し位置を調整</p>
         </div>
         <!-------------------------------- ここより下は地図表示 --------------------------------->
-        <!DOCTYPE html>
-        <html>
-
-        <head>
-            <meta charset="utf-8">
-            <meta charset="utf-8">
-            <style>
-                /* マップを表示する div 要素の高さを必ず明示的に指定します。 */
-    #map {
-        height: 400px;
-        width: 1000px;
-    }
-    #header {
-          padding: 3px;
-          width: 100%;
-          font-family: Meriyo UI;
-          font-size: 14px;
-          color: #000;
-      }
-    </style>
-        </head>
-
+        <%= render "/photos/map" %>
         <body>
             <div id="header"><b>Google Maps - 場所検索</b></div>
             <div>施設名称検索 （例：東京、熊本城）</div>
@@ -46,155 +25,9 @@
             <button id="clear">結果クリア</button>
             <div id="map" class="mt-1"></div><!-- 地図を表示する div 要素（id="map"）-->
             <div id="infowindw"></div>
-            <script>
-                var map;
-                var marker;
-                var center = { lat: 37.67229496806523, lng: 137.88838989062504 };
-    // var infoWindow;
-    // var center = {
-    //     lat: 35.65813908034716, // 緯度
-    //     lng: 139.69948625369216 // 経度
-    // };
-
-    //railsにデータを渡すためのIDを定義
-    function myFnc() {
-    document.getElementById('lat_data').value =  document.getElementById('lat').value;
-    document.getElementById('lng_data').value =  document.getElementById('lng').value;
-    }
-
-
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
-            center: center, // 地図の中心を指定
-            zoom: 2 // 地図のズームを指定
-        });
-
-
-////////////////////////////////////////////////////以下、geocordingを挿入
-
-// 検索実行ボタンが押下されたとき
-        document.getElementById('search').addEventListener('click', function() {
-
-            var place = document.getElementById('keyword').value;
-            var geocoder = new google.maps.Geocoder(); // geocoderのコンストラクタ
-
-
-            //マップ表示
-
-
-
-            geocoder.geocode({
-                address: place
-            }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-
-                    var bounds = new google.maps.LatLngBounds();
-
-                    for (var i in results) {
-                        if (results[0].geometry) {
-                            // 緯度経度を取得
-                            latlng = results[0].geometry.location;
-                            // 住所を取得
-                            var address = results[0].formatted_address;
-                            // 検索結果地が含まれるように範囲を拡大
-                            bounds.extend(latlng);
-                            // マーカーのセット
-                            //setMarker(latlng);
-                            // マーカーへの吹き出しの追加
-                            //setInfoW(place, latlng, address);
-                            // マーカーにクリックイベントを追加
-                            //markerEvent();
-                            //alert(latlng);
-                            map.setZoom(16);
-                            map.setCenter(latlng);
-
-                            console.log(map);
-                        }
-                    }
-                } else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
-                    alert("見つかりません");
-                } else {
-                    console.log(status);
-                    alert("エラー発生");
-                }
-            });
-
-        // 結果クリアーボタン押下時
-        document.getElementById('clear').addEventListener('click', function() {
-            map.setZoom(2);
-            map.setCenter(center);
-        });
-    });
-///////////////////////////////////////////////
-
-
-        //マップのイベント
-        google.maps.event.addListener(map, 'rightclick', function(e) {
-            //☆表示している地図上の緯度経度
-             document.getElementById('lat').value=e.latLng.lat();
-             document.getElementById('lng').value=e.latLng.lng();
-             myFnc();
-             deleteMarkers();
-
-
-            marker = new google.maps.Marker({
-
-
-             // マーカーの追加
-                position: e.latLng, //イベントの発生した緯度・経度（位置）
-                map: map, //this は map を意味します
-                title: "撮影場所の登録",
-                draggable: true,
-                disableDoubleClickZoom: true,
-                animation: google.maps.Animation.DROP
-            });
-
-
-
-            var infoWindow = new google.maps.InfoWindow({
-                content: "ドラッグで移動" + "<br>" + "バツで閉じる"
-            });
-
-
-
-            //マーカーのイベント
-            google.maps.event.addListener(marker, 'click', function() {
-                //マーカーをクリックしたとき
-                infoWindow.open(map, marker); //marker の位置に情報ウィンドウを表示
-
-            });
-
-            // マーカーのドロップ（ドラッグ終了）時のイベント
-            google.maps.event.addListener(marker, 'dragend', function(e) {
-            // イベントの引数evの、プロパティ.latLngが緯度経度。
-            document.getElementById('lat').value = e.latLng.lat();
-            document.getElementById('lng').value = e.latLng.lng();
-            myFnc();
-
-            });
-
-            //情報ウィンドウののイベント
-            google.maps.event.addListener(infoWindow, 'closeclick', function() {
-                marker.setMap(null); //マーカーを削除
-                document.getElementById('lat').value = null;
-                document.getElementById('lng').value = null;
-                myFnc();
-            });
-        });
-
-                //マーカーを削除する
-        function deleteMarkers() {
-          if(marker != null){
-            marker.setMap(null);
-          }
-          marker = null;
-        }
-    }
-    </script>
-            <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%=ENV['GOOGLE_MAP_API']%>&callback=initMap" async defer></script>
+            <%= javascript_include_tag "photo_new.js" %>
         </body>
 
-        </html>
     </div>
     <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
     <div class="row mt-4">
@@ -211,7 +44,7 @@
             <%#= f.collection_select :category_id, Category.all, :id, :name, :prompt => "選択してください" %>
             <h5>撮影場所</h5>
             <p>緯度 <input type="text" id="lat" value="" onchange="myFnc();"></p>
-            <p>経度 <input type="text" id="lng" value=""></p>
+            <p>経度 <input type="text" id="lng" value="" onchange="myFnc();"></p>
             <p>
                 <%= f.hidden_field :latitude, id: "lat_data" %>
             </p>
@@ -277,35 +110,4 @@
     </div>
 </div>
 <!------------------------入力項目のラジオボタン選択に対応した表示切替------------------------------------------->
-<script>
-function select_camera1() {
-    radio = document.getElementsByName('selected_button_camera')
-    if (radio[0].checked) {
-        document.getElementById('Box1').style.display = "";
-        document.getElementById('Box2').style.display = "none";
-    } else if (radio[1].checked) {
-        document.getElementById('Box1').style.display = " none";
-        document.getElementById('Box2').style.display = "";
-    }
-}
-
-function select_lense1() {
-    radio = document.getElementsByName('selected_button_lense')
-    if (radio[0].checked) {
-        document.getElementById('Box3').style.display = "";
-        document.getElementById('Box4').style.display = "none";
-    } else if (radio[1].checked) {
-        document.getElementById('Box3').style.display = " none";
-        document.getElementById('Box4').style.display = "";
-        window.onload = select_lense1;
-    }
-}
-// //////////////////画面表示時のラジオボタン選択状態///////////////////////////////////////////////////////////////////
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('Box1').style.display = ""; //表示
-    document.getElementById('Box2').style.display = "none"; //非表示
-    document.getElementById('Box3').style.display = "";
-    document.getElementById('Box4').style.display = "none";
-
-}, )
-</script>
+<%= javascript_include_tag "photo_new_radio_button.js" %>

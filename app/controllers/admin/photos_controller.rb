@@ -15,10 +15,10 @@ before_action :authenticate_admin!
   end
   def update
     photo = Photo.find(params[:id])
-    if photo.update(photo_params)
-      redirect_to admin_photo_path(photo.id)
+    if  photo.update(photo_params)
+        redirect_to admin_photo_path(photo.id)
     else
-      redirect_to admin_photos_path
+        redirect_to admin_photos_path
     end
   end
 

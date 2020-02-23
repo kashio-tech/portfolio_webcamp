@@ -11,7 +11,7 @@ class CamerasController < ApplicationController
 		@camera = Camera.new(camera_params)
 		@camera.user_id = current_user.id
 		if @camera.save
-		redirect_to	cameras_path
+			redirect_to	cameras_path
 		else
 			render "/photos/new.html.erb"
 		end
