@@ -160,7 +160,7 @@
             <% end %>
         </div>
     </div>
-    <%= form_for [@photo, @post_comment] do |f| %>
+    <%= form_for [@photo, @post_comment], data: {remote: true} do |f| %>
     <div class="row mb-4">
         <%= f.text_area :comment, class: "col-sm-8 ml-3" %>
         <div class="col-sm-2">
@@ -196,6 +196,6 @@
             });
         }
         </script>
-            </body>
+    </body>
     <!-------------------------------- ここより上は地図表示 ----------------------------------------------------------------------------->
 </div>
