@@ -5,10 +5,6 @@ class FavoritesController < ApplicationController
         if @photo.user_id != current_user.id
             favorite = current_user.favorites.new(photo_id: @photo.id)
             favorite.save
-            #redirect_back(fallback_location: root_path)
-        else
-            flash[:notice] = '自身の投稿画像には「いいね」できません'
-            redirect_back(fallback_location: root_path)
         end
     end
     def destroy
@@ -16,9 +12,6 @@ class FavoritesController < ApplicationController
         if @photo.user_id != current_user.id
             favorite = current_user.favorites.find_by(photo_id: @photo.id)
             favorite.destroy
-            #redirect_back(fallback_location: root_path)
-        else
-            redirect_back(fallback_location: root_path)
         end
     end
 
