@@ -19,7 +19,6 @@ class PhotosController < ApplicationController
 					@photo.camera_maker = params[:photo][:camera][:maker]
 					@photo.camera_model = params[:photo][:camera][:model]
 					Camera.create(user_id: current_user.id, maker: params[:photo][:camera][:maker], model: params[:photo][:camera][:model])
-					binding.pry
 				end
 			when "registered_camera"
 				if params[:photo][:camera_id] != ""

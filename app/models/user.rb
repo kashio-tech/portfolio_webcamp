@@ -27,4 +27,10 @@ class User < ApplicationRecord
         end
     end
      acts_as_paranoid #paranoia
+
+    def favorited_by?(user)
+        if  user.present?
+            favorites.where(user_id: user.id).exists?
+        end
+    end
 end

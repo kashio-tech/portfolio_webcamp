@@ -35,15 +35,17 @@
                     <li class="nav-item">
                         <%= link_to "   Logout", destroy_user_session_path, method: :delete, class: "fas fa-sign-out-alt mr-4 text-dark" %>
                     </li>
-                    <li><%= render 'layouts/search' %></li>
+                    <li>
+                        <%= render 'layouts/search' %>
+                    </li>
                 </ul>
-
                 <!-- アドミンがログインしている時  -->
                 <% elsif  admin_signed_in? %>
                 <ul class="nav navbar ml-auto">
                     <!-- リンクのみ -->
                     <li class="nav-item">
-                        <span class='fas fa-user-secret mr-4 text-dark'><%= " 管理者" %></span>
+                        <span class='fas fa-user-secret mr-4 text-dark'>
+                            <%= " 管理者" %></span>
                     </li>
                     <li class="nav-item">
                         <%= link_to " ユーザ一覧", admin_users_path, class: 'fas fa-user mr-4 text-dark' %>
@@ -54,9 +56,10 @@
                     <li class="nav-item">
                         <%= link_to " Logout", destroy_admin_session_path, method: :delete, class: "fas fa-sign-out-alt mr-4 text-dark" %>
                     </li>
-                    <li><%= render 'layouts/search' %></li>
+                    <li>
+                        <%= render 'layouts/search' %>
+                    </li>
                 </ul>
-
                 <!-- ログインしていない時 -->
                 <% else %>
                 <ul class="nav navbar ml-auto">
@@ -70,11 +73,14 @@
                     <li>
                         <%= link_to "   Login", new_user_session_path, class: 'fas fa-sign-in-alt mr-4 text-dark' %>
                     </li>
-                    <li><%= render 'layouts/search' %></li>
+                    <li>
+                        <%= render 'layouts/search' %>
+                    </li>
                 </ul>
                 <% end %>
             </form>
         </nav>
+        <%= render 'layouts/flash' %>
         <div class="container-fluid mb-4">
             <%= yield %>
         </div>

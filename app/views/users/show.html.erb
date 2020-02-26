@@ -20,17 +20,21 @@
             <!-- //w-100で画像サイズを100%にリサイズ設定 -->
             <%= attachment_image_tag photo, :image, class: "w-100" %>
             <%#= image_tag photo, :image, class: "w-100" %>
-            <p>
-                タイトル:
-                <%= photo.title %>
-                <i class="far fa-comments text-danger ml-4">
-                    <%= photo.post_comments.count %></i>
-                <% if photo.favorited_by?(current_user) %>
-                <%= link_to photo.favorites.count, photo_favorites_path(photo.id), method: :delete, class: "fa fa-heart text-danger" %>
-                <% else %>
-                <%= link_to photo.favorites.count, photo_favorites_path(photo.id), method: :post, class: "fa fa-heart-o text-danger" %>
-                <% end %>
-            </p>
+            <ul class="user-favorite">
+                <li>タイトル:
+                <%= photo.title %></li>
+                <li class="far fa-comments text-danger ml-4">
+                    <%= photo.post_comments.count %></li>
+                <!-- iタグでajaxにすると、いいねを押したときに不具合が生じる(複数にハートが表示される)ので、インラインブロックで対応させた -->
+                <li class="photo_<%= photo.id %>">
+                    <%= render 'photos/favorite', photo: photo %>
+                </li>
+            </ul>
+                <%# if photo.favorited_by?(current_user) %>
+                <%#= link_to photo.favorites.count, photo_favorites_path(photo.id), method: :delete, class: "fa fa-heart text-danger" %>
+                <%# else %>
+                <%#= link_to photo.favorites.count, photo_favorites_path(photo.id), method: :post, class: "fa fa-heart-o text-danger" %>
+                <%# end %>
             <% end %>
         </div>
         <% end %>
