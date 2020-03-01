@@ -18,6 +18,9 @@ class CamerasController < ApplicationController
 	end
 	def edit
 		@camera = Camera.find(params[:id])
+		if @camera.user != current_user
+			redirect_to root_path
+		end
 	end
 	def update
 		@camera = Camera.find(params[:id])

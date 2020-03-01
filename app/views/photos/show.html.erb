@@ -138,25 +138,26 @@
             </div>
         </div>
     </div>
-    <div class="row mt-4 mb-4">
+<!--     <div class="row mt-4 mb-4">
         <div class="col-sm-12">
             <h4>コメント</h4>
-            <% @photo.post_comments.each do |post_comment| %>
+            <%# @photo.post_comments.each do |post_comment| %>
             <div class="photo-show-comment-body mt-2">
-                <%= attachment_image_tag post_comment.user, :profile_image, :fill, 50, 50, class: "rounded-circle profile-thumb", fallback: "no_image.jpg", :width => "50", :height => "50" %>
+                <%#= attachment_image_tag post_comment.user, :profile_image, :fill, 50, 50, class: "rounded-circle profile-thumb", fallback: "no_image.jpg", :width => "50", :height => "50" %>
                 <a>
-                    <%= post_comment.user.display_name %></a>
-                <%= post_comment.created_at.strftime("%Y/%m/%d") %>
-                <%= post_comment.comment %>
-                <% if current_user.present? %>
-                <% if post_comment.user_id == current_user.id %>
-                <%= link_to '削除', photo_post_comment_path(@photo.id, post_comment.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
-                <% end %>
-                <% end %>
+                    <%#= post_comment.user.display_name %></a>
+                <%#= post_comment.created_at.strftime("%Y/%m/%d") %>
+                <%#= post_comment.comment %>
+                <%# if current_user.present? %>
+                <%# if post_comment.user_id == current_user.id %>
+                <%#= link_to '削除', photo_post_comment_path(@photo.id, post_comment.id), method: :delete, data: {confirm: "削除しますか？"},  class: 'btn btn-danger'%>
+                <%# end %>
+                <%# end %>
             </div>
-            <% end %>
+            <%# end %>
         </div>
-    </div>
+    </div> -->
+    <%= render 'photos/comment', photo: @photo %>
     <%= form_for [@photo, @post_comment], data: {remote: true} do |f| %>
     <div class="row mb-4">
         <%= f.text_area :comment, class: "col-sm-8 ml-3" %>

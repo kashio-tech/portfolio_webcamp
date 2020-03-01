@@ -18,6 +18,9 @@ class LensesController < ApplicationController
 	end
 	def edit
 		@lense = Lense.find(params[:id])
+		if @lense.user != current_user
+			redirect_to root_path
+		end
 	end
 	def update
 		@lense = Lense.find(params[:id])
