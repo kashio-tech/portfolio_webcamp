@@ -8,6 +8,10 @@ before_action :authenticate_admin!
 
   def show
     @photo = Photo.find(params[:id])
+    if @photo.user.nil?
+      flash[:notice] = "ユーザーが削除されているため、詳細は確認できません"
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def edit
