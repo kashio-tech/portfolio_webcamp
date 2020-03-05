@@ -84,7 +84,6 @@ Rails.application.configure do
 #以下は、map_newでjsファイル読み込みのために記載
   config.assets.precompile += ['photo_new.js']
   config.assets.precompile += ['photo_new_radio_button.js']
-  config.assets.precompile += ['photo_show.js']
 
 
   # Use a different logger for distributed setups.
