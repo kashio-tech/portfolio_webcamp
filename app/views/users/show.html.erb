@@ -19,13 +19,12 @@
             <%= link_to photo_path(photo.id), class: 'text-dark' do %>
             <!-- //w-100で画像サイズを100%にリサイズ設定 -->
             <%= attachment_image_tag photo, :image, class: "w-100" %>
-            <%#= image_tag photo, :image, class: "w-100" %>
             <ul class="user-favorite">
                 <li>タイトル:
                 <%= photo.title %></li>
                 <li class="far fa-comments text-danger ml-4">
                     <%= photo.post_comments.count %></li>
-                <!-- iタグでajaxにすると、いいねを押したときに不具合が生じる(複数にハートが表示される)ので、インラインブロックで対応させた -->
+                <!-- iタグでajaxにすると、いいねを押したときに不具合が生じる(複数にハートが表示される)ので、インラインブロックで対応 -->
                 <li class="photo_<%= photo.id %>">
                     <%= render 'photos/favorite', photo: photo %>
                 </li>

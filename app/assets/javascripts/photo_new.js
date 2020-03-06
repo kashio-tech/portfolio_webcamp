@@ -45,13 +45,6 @@ function initMap() {
                         var address = results[0].formatted_address;
                         // 検索結果地が含まれるように範囲を拡大
                         bounds.extend(latlng);
-                        // マーカーのセット
-                        //setMarker(latlng);
-                        // マーカーへの吹き出しの追加
-                        //setInfoW(place, latlng, address);
-                        // マーカーにクリックイベントを追加
-                        //markerEvent();
-                        //alert(latlng);
                         map.setZoom(16);
                         map.setCenter(latlng);
 
