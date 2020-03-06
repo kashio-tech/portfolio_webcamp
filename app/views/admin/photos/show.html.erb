@@ -131,12 +131,6 @@
                             <%= @photo.iso_speed %>
                         </td>
                     </tr>
-                    <!--                     <tr>
-                        <td><label>ホワイトバランス</label></td>
-                        <td>
-                            <%= @photo.white_balance %>
-                        </td>
-                    </tr> -->
                 </table>
             </div>
         </div>
@@ -203,14 +197,6 @@
                 map: map, // マーカーを立てる地図を指定
                 title: "<%= @photo.title %>"
             });
-
-            //     infoWindow = new google.maps.InfoWindow({ //吹き出しの追加
-            //         //content: '<div class = "map">SAMPLE</div>' //吹き出しに表示する内容
-            //         content: document.getElementById('infowindw')
-            //     });
-            //     marker.addListener('click', function() { //マーカーをクリックしたとき
-            //         infoWindow.open(map, marker); //吹き出しの表示
-            //     });
         }
         </script>
         <script src='https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=<%=ENV['GOOGLE_MAP_API']%>&callback=initMap' async defer>

@@ -1,16 +1,16 @@
 <div class="container-fluid">
     <div class="row mb-4">
-        <div class="col-sm-2">
+        <div class="col-sm-2 mt-1">
             <h4>マイページ</h4>
         </div>
         <div class="col-sm-6">
-            <%= link_to "画像一覧(写真)", user_path(@user), class: "btn btn-primary mr-4" %>
+            <%= link_to "画像一覧(写真)", user_path(@user), class: "btn btn-primary btn-sm mr-4 mt-1" %>
         </div>
         <div class="col-sm-4">
             <% if  user_signed_in? %>
             <% if @user.id == current_user.id %>
-            <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-primary mr-4" %>
-            <%= link_to "カメラ編集", cameras_path, class: "btn btn-primary" %>
+            <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-primary btn-sm mr-4 mt-1" %>
+            <%= link_to "カメラ編集", cameras_path, class: "btn btn-primary btn-sm mt-1" %>
             <% end %>
             <% end %>
         </div>
@@ -30,7 +30,6 @@
         <div id="infowindw"></div>
         <script>
         var map;
-        // var marker;
         var marker = []; //markerを配列で定義
         var infoWindow = []; //infowindowを配列で定義
 
@@ -60,7 +59,6 @@
             infoWindow[j] = new google.maps.InfoWindow({ //吹き出しの追加
 
                 content: "タイトル： <%= photo.title %><br>" + "説明： <%= photo.caption %><br>" + "撮影日時： <%= photo.taken_at %>" //吹き出しに表示する内容
-                //content: document.getElementById('infowindw')
             });
             individual_marker(j);
             <% i += 1 %>;

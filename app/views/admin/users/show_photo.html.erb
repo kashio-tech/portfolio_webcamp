@@ -1,10 +1,11 @@
+<%= flash[:notice] %>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2"><h4>マイページ</h4></div>
-        <div class="col-sm-5"><%= link_to "画像一覧(map)", show_map_user_path(@user), class: "btn btn-primary mr-4" %></div>
+        <div class="col-sm-2 mt-1"><h4>マイページ</h4></div>
+        <div class="col-sm-5"><%= link_to "画像一覧(map)", show_map_user_path(@user), class: "btn btn-primary btn-sm mr-4 mt-1" %></div>
         <div class="col-sm-5">
-            <%= link_to "カメラ編集", cameras_path, class: "btn btn-primary mr-3" %>
-            <%= link_to "レンズ編集", lenses_path, class: "btn btn-primary" %>
+            <%= link_to "カメラ編集", cameras_path, class: "btn btn-primary btn-sm mr-3 mt-1" %>
+            <%= link_to "レンズ編集", lenses_path, class: "btn btn-primary btn-sm mt-1" %>
         </div>
     </div>
     <div class="row mt-4">
