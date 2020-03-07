@@ -14,14 +14,4 @@ class FavoritesController < ApplicationController
             favorite.destroy
         end
     end
-
-    # private
-    # def redirect
-    #     case params[:redirect_id].to_i
-    #     when 0
-    #         redirect_to photos_path
-    #     when 1
-    #         redirect_to photo_path(@photo.id)
-    #     end
-    # end
 end
