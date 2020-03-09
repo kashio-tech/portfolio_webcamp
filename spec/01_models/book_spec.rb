@@ -2,7 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Book, "モデルに関するテスト", type: :model do
+#RSpec.describe Book, "モデルに関するテスト", type: :model do
+RSpec.describe Photo, "モデルに関するテスト", type: :model do
   describe 'アソシエーション' do
     it "Userモデルに属している" do
       is_expected.to belong_to(:user)
