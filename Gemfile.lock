@@ -322,7 +322,7 @@ DEPENDENCIES
   dotenv-rails
   enum_help
   factory_bot_rails
-  faker (~> 2.0.0)
+  faker
   font-awesome-rails
   jbuilder (~> 2.5)
   jquery-rails
