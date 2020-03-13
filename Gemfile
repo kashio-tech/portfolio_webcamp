@@ -56,6 +56,10 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+  #rspecで以下の3行を追加
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem 'faker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -70,7 +74,7 @@ gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"
 gem 'rspec-rails'
 gem  "factory_bot_rails"
-gem 'faker', '~> 2.0.0'
+#gem 'faker', '~> 2.0.0'
 gem 'database_cleaner'
 gem 'pry-byebug'
 gem 'ransack'
