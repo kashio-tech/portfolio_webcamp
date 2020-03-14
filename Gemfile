@@ -72,8 +72,8 @@ gem  'jquery-rails'
 gem 'font-awesome-rails'
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"
-gem 'rspec-rails'
-gem  "factory_bot_rails"
+# gem 'rspec-rails'
+# gem  "factory_bot_rails"
 #gem 'faker', '~> 2.0.0'
 gem 'database_cleaner'
 gem 'pry-byebug'
